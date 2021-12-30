@@ -3,7 +3,9 @@ const { token } = require('./config.json');
 const { operators } = require('./operators.json');
 const fs = require('fs');
 
-const client = new Client({intents: [Intents.FLAGS.GUILDS] });
+const prefix = '$';
+
+const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 client.commands = new Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -35,12 +37,30 @@ client.on('interactionCreate', async interaction => {
         });
     }
 
-    if (client.commands.get(command).operatorOnly && !operators.includes(interaction.user.id)) {
-        interaction.reply("You don't have sufficient permission to use this command");
-    }
+    execute(interaction, command, args, interaction.user.id);
 
-    client.commands.get(command).execute(interaction, args);
+});
+
+client.on('messageCreate', (message) => {
+
+    if(!message.content.startsWith(prefix) || message.author.bot) return;
+
+    const args = message.content.slice(prefix.length).split(/ +/);
+    const command = args.shift().toLowerCase();
+
+    execute(message, command, args, message.author.id);
 
 });
 
 client.login(token);
+
+function execute(interaction, command, args, id) {
+
+    if (client.commands.get(command).operatorOnly && !operators.includes(id)) {
+        interaction.reply("You don't have sufficient permission to use this command");
+        return;
+    }
+
+    client.commands.get(command).execute(interaction, args);
+
+}

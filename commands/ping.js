@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const name = 'ping';
 const description = 'Replies with Pong';
 const aliases = [];
-const operatorOnly = false;
+const operatorOnly = true;
 
 module.exports = {
 
