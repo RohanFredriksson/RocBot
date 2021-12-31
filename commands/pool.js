@@ -5,11 +5,11 @@ const database = require('../database.js');
 const util = require('./../util.js');
 
 const name = 'pool';
-const description = 'Add or remove song pools!';
+const description = 'Add and remove songs pools from your profile!';
 const aliases = [];
 const operatorOnly = false;
 
-const invalidPoolNames = ['create', 'delete'];
+const invalidpoolNames = ['create', 'delete'];
 
 module.exports = {
 
@@ -19,8 +19,8 @@ module.exports = {
 	operatorOnly: operatorOnly,
 
 	data: new SlashCommandBuilder()
-			    .setName('pool')
-			    .setDescription('Replies with Pong!')
+			    .setName(name)
+			    .setDescription(description)
                 .addStringOption(option =>
                     option.setName("mode")
                     .setDescription("Create or Delete. Enter a pool name to see more details.")
@@ -49,22 +49,22 @@ module.exports = {
                 return;
             }
 
-            poolname = args[1].toLowerCase();
+            poolName = args[1].toLowerCase();
 
-            if (getPool(poolname, userData) != null) {
+            if (getPool(poolName, userData) != null) {
                 reply(interaction, 'Pool already exists! Pools can not have the same name.');
                 return;
             }
 
-            if (invalidPoolNames.includes(poolname)) {
+            if (invalidpoolNames.includes(poolName)) {
                 reply(interaction, 'Invalid pool name! Please try another name.');
                 return;
             }
 
-            addPool(poolname, userData);
+            addPool(poolName, userData);
             database.updateUser(id, userData);
 
-            reply(interaction, 'Pool \"' + util.capitalizeFirstLetter(poolname) + '\" created!');
+            reply(interaction, 'Pool \"' + util.capitalizeFirstLetter(poolName) + '\" created!');
             return;
 
         }
@@ -76,17 +76,17 @@ module.exports = {
                 return;
             }
 
-            poolname = args[1].toLowerCase();
+            poolName = args[1].toLowerCase();
 
-            if (getPool(poolname, userData) == null) {
+            if (getPool(poolName, userData) == null) {
                 reply(interaction, 'Pool does not exist!');
                 return;
             }
 
-            removePool(poolname, userData);
+            removePool(poolName, userData);
             database.updateUser(id, userData);
 
-            reply(interaction, 'Pool \"' + util.capitalizeFirstLetter(poolname) + '\" removed!');
+            reply(interaction, 'Pool \"' + util.capitalizeFirstLetter(poolName) + '\" removed!');
             return;
 
         }
