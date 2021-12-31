@@ -1,10 +1,10 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { send, reply } = require('./../util.js');
-const { getPool, removePool } = require('./../song-pool.js');
-const database = require('./../database.js');
-const util = require('./../util.js');
+const { send, reply } = require('../util.js');
+const { getPool, removePool } = require('../song-pool.js');
+const database = require('../database.js');
+const util = require('../util.js');
 
-const name = 'deletepool';
+const name = 'removepool';
 const description = 'Remove a song pool for your profile!';
 const aliases = [];
 const operatorOnly = false;
