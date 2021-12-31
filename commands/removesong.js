@@ -2,13 +2,13 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const ytdl = require('ytdl-core');
 
 const { reply } = require('./../util.js');
-const { getPool, addSongToPool, hasSongInPool } = require('./../song-pool.js');
+const { getPool, removeSongFromPool, hasSongInPool } = require('./../song-pool.js');
 const database = require('../database.js');
 const util = require('./../util.js');
 const { videoFinder } = require('./../youtube.js');
 
-const name = 'addsong';
-const description = 'Add songs to pools!';
+const name = 'removesong';
+const description = 'Remove songs from pools!';
 const aliases = [];
 const operatorOnly = false;
 
@@ -24,7 +24,7 @@ module.exports = {
 			    .setDescription(description)
                 .addStringOption(option =>
                     option.setName("pool")
-                    .setDescription("Enter a pool name to add a song to.")
+                    .setDescription("Enter a pool name to remove a song from.")
                     .setRequired(true)
                 )
                 .addStringOption(option =>
@@ -36,12 +36,12 @@ module.exports = {
 	async execute(interaction, args, id, userData) {
 
         if (args.length < 1) {
-            reply(interaction, 'No song pool provided! Please specify a song pool to add a song in.');
+            reply(interaction, 'No song pool provided! Please specify a song pool to remove a song from.');
             return;
         }
 
         if (args.length < 2) {
-            reply(interaction, 'No song provided! To add a song please enter some search terms or a YouTube link.');
+            reply(interaction, 'No song provided! To remove a song please enter some search terms or a YouTube link.');
             return;
         }
 
@@ -70,14 +70,14 @@ module.exports = {
 
         }
 
-        if (hasSongInPool(poolName, song.title, userData)) {
-            reply(interaction, 'Song "' + song.title + '" is already in pool "' + util.capitalizeFirstLetter(poolName) + '"');
+        if (!hasSongInPool(poolName, song.title, userData)) {
+            reply(interaction, 'Song "' + song.title + '" is not in pool "' + util.capitalizeFirstLetter(poolName) + '"');
             return;
         }
 
-        addSongToPool(poolName, song, userData);
+        removeSongFromPool(poolName, song.url, userData);
         database.updateUser(id, userData);
-        reply(interaction, 'Song "' + song.title + '" was successfully added to pool "' + util.capitalizeFirstLetter(poolName) + '"');
+        reply(interaction, 'Song "' + song.title + '" was successfully remove from pool "' + util.capitalizeFirstLetter(poolName) + '"');
 
 	}
 
