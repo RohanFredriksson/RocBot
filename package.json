@@ -3,12 +3,13 @@
     "@discordjs/builders": "^0.11.0",
     "@discordjs/rest": "^0.2.0-canary.0",
     "discord-api-types": "^0.26.0",
-    "discord.js": "^13.5.0"
+    "discord.js": "^13.5.0",
+    "yt-search": "^2.10.3",
+    "ytdl-core": "^4.9.2"
   },
   "name": "rocbot",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

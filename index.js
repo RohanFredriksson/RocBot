@@ -1,6 +1,7 @@
 const { Client, Intents, ClientVoiceManager, Collection } = require('discord.js');
 const { token } = require('./config.json');
 const { operators } = require('./operators.json');
+const database = require('./database.js');
 const fs = require('fs');
 
 const prefix = '$';
@@ -30,6 +31,7 @@ client.on('interactionCreate', async interaction => {
 
     const command = interaction.commandName.toLowerCase();
     const args = [];
+    const userData = database.getUser(interaction.user.id);
 
     if (typeof interaction.options !== 'undefined') {
         interaction.options._hoistedOptions.forEach(option => {
@@ -37,7 +39,7 @@ client.on('interactionCreate', async interaction => {
         });
     }
 
-    execute(interaction, command, args, interaction.user.id);
+    execute(interaction, command, args, interaction.user.id, userData);
 
 });
 
@@ -47,20 +49,21 @@ client.on('messageCreate', (message) => {
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
+    const userData = database.getUser(message.author.id);
 
-    execute(message, command, args, message.author.id);
+    execute(message, command, args, message.author.id, userData);
 
 });
 
 client.login(token);
 
-function execute(interaction, command, args, id) {
+function execute(interaction, command, args, id, userData) {
 
     if (client.commands.get(command).operatorOnly && !operators.includes(id)) {
         interaction.reply("You don't have sufficient permission to use this command");
         return;
     }
 
-    client.commands.get(command).execute(interaction, args);
+    client.commands.get(command).execute(interaction, args, id, userData);
 
 }
