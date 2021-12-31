@@ -86,7 +86,7 @@ module.exports = {
 
     },
 
-    removeSongFromPool(name, title, json) {
+    removeSongFromPool(name, url, json) {
 
         for (i = 0; i < json.length; i++) {
 
@@ -96,7 +96,7 @@ module.exports = {
                 for (j = 0; j < pool.songs.length; j++) {
 
                     song = pool.songs[j];
-                    if (song.title == title) {
+                    if (song.url == url) {
                         pool.songs.splice(j, 1);
                         return;
                     }
