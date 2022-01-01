@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply, getId } = require('../util.js');
+const { reply } = require('../util.js');
 const { getPool, addPool } = require('../song-pool.js');
 const database = require('../database.js');
 const util = require('../util.js');

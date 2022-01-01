@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply, getId } = require('../util.js');
-const { getPool, removePool } = require('../song-pool.js');
+const { reply, getUserId, getGuildId } = require('../util.js');
+const { getPool } = require('../song-pool.js');
 const database = require('../database.js');
 const util = require('../util.js');
 
@@ -29,7 +29,14 @@ module.exports = {
 
     async execute(interaction, args, client, userData) {
 
-        const id = getUserId(interaction);
+        const userId = getUserId(interaction);
+		const guildId = getGuildId(interaction);
+
+		const guild = client.guilds.cache.get(guildId);
+		const member = guild.members.cache.get(userId);
+		const voiceChannel = member.voice.channel;
+
+        console.log(voiceChannel);
 
         reply(interaction, 'Not implemented yet!');
         return;
