@@ -2,8 +2,11 @@
   "dependencies": {
     "@discordjs/builders": "^0.11.0",
     "@discordjs/rest": "^0.2.0-canary.0",
+    "@discordjs/voice": "^0.7.5",
     "discord-api-types": "^0.26.0",
     "discord.js": "^13.5.0",
+    "libsodium-wrappers": "^0.7.9",
+    "opusscript": "^0.0.8",
     "yt-search": "^2.10.3",
     "ytdl-core": "^4.9.2"
   },

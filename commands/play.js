@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply, titleCase } = require('./../util.js');
+const { reply, titleCase, getGuildId } = require('./../util.js');
+const { joinVoiceChannel } = require('@discordjs/voice');
+const { GuildWidgetStyle } = require('discord-api-types');
 
 const name = 'play';
 const description = 'Play songs and queue song pools!';
@@ -38,13 +40,32 @@ module.exports = {
                 .addStringOption(option =>
                     option.setName("order")
                     .setDescription("Choose whether the songs should be played in chronological order or randomly picked.")
-                    .addChoice("ordered", "ordered")
                     .addChoice("random", "random")
+                    .addChoice("ordered", "ordered")
                 )
             ],
 
 	async execute(interaction, command, args, client, user) {
 
+        
+
 	}
 
 };
+
+const join = (interaction, serverQueue) => {
+
+    const connection = joinVoiceChannel({
+        channelId: channel.id,
+        guildId: channel.guild.id,
+        adapterCreator: channel.guild.voiceAdapterCreator 
+    });
+
+}
+
+const disconnect = (interaction, serverQueue) => {
+    
+}
+
+
+
