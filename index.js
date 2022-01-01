@@ -39,7 +39,7 @@ client.on('interactionCreate', async interaction => {
         });
     }
 
-    execute(interaction, command, args, interaction.user.id, userData);
+    execute(interaction, command, args, userData);
 
 });
 
@@ -51,19 +51,19 @@ client.on('messageCreate', (message) => {
     const command = args.shift().toLowerCase();
     const userData = database.getUser(message.author.id);
 
-    execute(message, command, args, message.author.id, userData);
+    execute(message, command, args, userData);
 
 });
 
 client.login(token);
 
-function execute(interaction, command, args, id, userData) {
+function execute(interaction, command, args, userData,) {
 
     if (client.commands.get(command).operatorOnly && !operators.includes(id)) {
         interaction.reply("You don't have sufficient permission to use this command");
         return;
     }
 
-    client.commands.get(command).execute(interaction, args, id, userData);
+    client.commands.get(command).execute(interaction, args, client, userData);
 
 }

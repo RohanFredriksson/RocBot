@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply } = require('../util.js');
+const { reply, getId } = require('../util.js');
 const { getPool, addPool } = require('../song-pool.js');
 const database = require('../database.js');
 const util = require('../util.js');
@@ -16,17 +16,21 @@ module.exports = {
     aliases: aliases,
 	operatorOnly: operatorOnly,
 
-	data: new SlashCommandBuilder()
-			    .setName(name)
-			    .setDescription(description)
+    data:   [
+                new SlashCommandBuilder()
+                .setName(name)
+                .setDescription(description)
                 .addStringOption(option =>
                     option.setName("pool")
                     .setDescription("Enter a pool name for the new pool.")
                     .setRequired(true)
-                ),
+                )
+            ],
 
-	async execute(interaction, args, id, userData) {
+    async execute(interaction, args, client, userData) {
 
+        const id = getUserId(interaction);
+    
         if (args.length < 1) {
             reply(interaction, 'Not enough arguments!');
             return;

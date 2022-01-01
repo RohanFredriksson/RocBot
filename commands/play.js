@@ -4,8 +4,8 @@ const { getPool, removePool } = require('../song-pool.js');
 const database = require('../database.js');
 const util = require('../util.js');
 
-const name = 'removepool';
-const description = 'Remove a song pool for your profile!';
+const name = 'play';
+const description = 'Play a song or play a song pool!';
 const aliases = [];
 const operatorOnly = false;
 
@@ -31,22 +31,7 @@ module.exports = {
 
         const id = getUserId(interaction);
 
-        if (args.length < 1) {
-            reply(interaction, 'Not enough arguments!');
-            return;
-        }
-
-        poolName = args[0].toLowerCase();
-
-        if (getPool(poolName, userData) == null) {
-            reply(interaction, 'Pool does not exist!');
-            return;
-        }
-
-        removePool(poolName, userData);
-        database.updateUser(id, userData);
-
-        reply(interaction, 'Pool \"' + util.capitalizeFirstLetter(poolName) + '\" removed!');
+        reply(interaction, 'Not implemented yet!');
         return;
 
 	}

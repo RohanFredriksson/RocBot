@@ -18,6 +18,26 @@ module.exports = {
         
     },
 
+    getUserId(interaction) {
+        
+        if (typeof interaction.user !== "undefined") {
+            return interaction.user.id;
+        }
+
+        return interaction.author.id;
+
+    },
+
+    getGuildId(interaction) {
+
+        if (typeof interaction.member !== "undefined") {
+            return interaction.member.guild.id;
+        }
+
+        return interaction.guildId;
+
+    },
+
     capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }

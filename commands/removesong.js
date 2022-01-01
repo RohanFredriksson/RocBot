@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const ytdl = require('ytdl-core');
 
-const { reply } = require('./../util.js');
+const { reply, getId } = require('./../util.js');
 const { getPool, removeSongFromPool, hasSongInPool } = require('./../song-pool.js');
 const database = require('../database.js');
 const util = require('./../util.js');
@@ -19,7 +19,8 @@ module.exports = {
     aliases: aliases,
 	operatorOnly: operatorOnly,
 
-	data: new SlashCommandBuilder()
+	data:   [    
+                new SlashCommandBuilder()
 			    .setName(name)
 			    .setDescription(description)
                 .addStringOption(option =>
@@ -31,9 +32,12 @@ module.exports = {
                     option.setName("query")
                     .setDescription("Enter search terms or a YouTube URL.")
                     .setRequired(true)
-                ),
+                )
+            ],
 
-	async execute(interaction, args, id, userData) {
+    async execute(interaction, args, client, userData) {
+
+        const id = getUserId(interaction);
 
         if (args.length < 1) {
             reply(interaction, 'No song pool provided! Please specify a song pool to remove a song from.');
