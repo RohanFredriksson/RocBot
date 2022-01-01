@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply, capitalizeFirstLetter } = require('../util.js');
+const { reply, titleCase } = require('../util.js');
 
 const name = 'addpool';
 const description = 'Create a new song pool for your profile!';
@@ -43,7 +43,7 @@ module.exports = {
         user.addPool(pool);
         user.save();
 
-        reply(interaction, 'Pool \"' + capitalizeFirstLetter(pool) + '\" created!');
+        reply(interaction, 'Pool \"' + titleCase(pool) + '\" created!');
 
 	}
 

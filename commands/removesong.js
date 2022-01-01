@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { reply, titleCase } = require('./../util.js');
 
-const name = 'addsong';
-const description = 'Add songs to pools!';
+const name = 'removesong';
+const description = 'Remove songs from existing pools!';
 const aliases = [];
 const operatorOnly = false;
 
@@ -19,12 +19,12 @@ module.exports = {
 			    .setDescription(description)
                 .addStringOption(option =>
                     option.setName("pool")
-                    .setDescription("Enter a pool name to add a song to.")
+                    .setDescription("Enter a pool name that you wish to remove a song from.")
                     .setRequired(true)
                 )
                 .addStringOption(option =>
                     option.setName("query")
-                    .setDescription("Enter search terms or a YouTube URL.")
+                    .setDescription("Enter search terms or a YouTube URL for the song name.")
                     .setRequired(true)
                 )
             ],
@@ -51,22 +51,18 @@ module.exports = {
             return;
         }
 
-        if (await pool.hasSong(args)) {
-
-            song = await pool.getSong(args)
-            title = song.title;
-
-            reply(interaction, 'Song "' + title + '" is already in pool "' + titleCase(poolName) + '"');
+        if (await !pool.hasSong(args)) {
+            reply(interaction, 'Song requested is not in pool "' + titleCase(poolName) + '"');
             return;
         }
 
-        await pool.addSong(args);
-
         song = await pool.getSong(args)
         title = song.title;
+
+        await pool.removeSong(args);
         user.save();
 
-        reply(interaction, 'Song "' + title + '" was successfully added to pool "' + titleCase(poolName) + '"');
+        reply(interaction, 'Song "' + title + '" was successfully removed from pool "' + titleCase(poolName) + '"');
 
 	}
 

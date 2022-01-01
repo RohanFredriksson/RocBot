@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply, capitalizeFirstLetter } = require('../util.js');
+const { reply, titleCase } = require('../util.js');
 
 const name = 'removepool';
 const description = 'Remove an existing song pool for your profile!';
@@ -43,7 +43,7 @@ module.exports = {
         user.removePool(pool);
         user.save();
 
-        reply(interaction, 'Pool \"' + capitalizeFirstLetter(pool) + '\" removed!');
+        reply(interaction, 'Pool \"' + titleCase(pool) + '\" removed!');
 
 	}
 
