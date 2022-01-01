@@ -1,4 +1,4 @@
-config.json
+bot.json
 operators.json
 node_modules
 data/[0-9]*.json

@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { token, clientId, guildId} = require('./config.json');
+const { token, clientId, guildId} = require('./bot.json');
 
 const rest = new REST({ version: '9' }).setToken(token);
 rest.get(Routes.applicationGuildCommands(clientId, guildId))

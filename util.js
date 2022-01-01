@@ -1,3 +1,5 @@
+const { prefix } = require('./config.json');
+
 module.exports = {
 
     send(interaction, output) {
@@ -16,6 +18,16 @@ module.exports = {
             interaction.reply(output);
         }
         
+    },
+
+    getCommandName(interaction) {
+
+        if (typeof interaction.content !== "undefined") {
+            return interaction.content.slice(prefix.length).split(/ +/).shift().toLowerCase();
+        }
+
+        return interaction.commandName;
+
     },
 
     getUserId(interaction) {

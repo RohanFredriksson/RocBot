@@ -2,6 +2,21 @@ const database = require('./database.js');
 
 module.exports = {
 
+    hasPool(name, json) {
+
+        for (i = 0; i < json.length; i++) {
+
+            var pool = json[i];
+            if (pool.name == name) {
+                return true;
+            }
+
+        }
+
+        return false;
+
+    },
+
     getPool(name, json) {
 
         for (i = 0; i < json.length; i++) {
@@ -62,6 +77,28 @@ module.exports = {
 
                 }
                 return false;
+            }
+
+        }
+        return false;
+    },
+
+    getSongInPool(name, title, json) {
+
+        for (i = 0; i < json.length; i++) {
+
+            var pool = json[i];
+            if (pool.name == name) {
+                
+                for (j = 0; j < pool.songs.length; j++) {
+
+                    song = pool.songs[j];
+                    if (song.title == title) {
+                        return song;
+                    }
+
+                }
+                return null;
             }
 
         }

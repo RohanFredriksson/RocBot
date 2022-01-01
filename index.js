@@ -1,10 +1,9 @@
 const { Client, Intents, ClientVoiceManager, Collection } = require('discord.js');
-const { token } = require('./config.json');
+const { token } = require('./bot.json');
+const { prefix } = require('./config.json');
 const { operators } = require('./operators.json');
 const database = require('./database.js');
 const fs = require('fs');
-
-const prefix = '$';
 
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});//, Intents.FLAGS.GUILD_VOICE_STATES] });
 client.commands = new Collection();
