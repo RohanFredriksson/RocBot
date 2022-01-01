@@ -41,7 +41,6 @@ module.exports = {
                     .addChoice("ordered", "ordered")
                     .addChoice("random", "random")
                 )
-
             ],
 
 	async execute(interaction, command, args, client, user) {

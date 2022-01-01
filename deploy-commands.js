@@ -11,7 +11,6 @@ for (const file of commandFiles) {
 	command.data.forEach(data => {
 		commands.push(data.toJSON());
 	});
-	//commands.push(command.data.toJSON());
 }
 
 const rest = new REST({ version: '9' }).setToken(token);
