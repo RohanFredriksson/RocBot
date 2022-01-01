@@ -1,12 +1,13 @@
 const fs = require('fs');
 const { Client, Intents, ClientVoiceManager, Collection } = require('discord.js');
-const { token } = require('./bot.json');
-const { prefix } = require('./config.json');
-const { operators } = require('./operators.json');
+const { token } = require('./config.json');
 const { User } = require('./classes/user.js');
 
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});//, Intents.FLAGS.GUILD_VOICE_STATES] });
 client.commands = new Collection();
+
+const prefix = '$';
+const operators = ['202264121461309440'];
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -67,6 +68,6 @@ function execute(interaction, command, args, user,) {
         return;
     }
 
-    client.commands.get(command).execute(interaction, args, client, user);
+    client.commands.get(command).execute(interaction, command, args, client, user);
 
 }

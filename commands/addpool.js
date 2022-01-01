@@ -24,7 +24,7 @@ module.exports = {
                 )
             ],
 
-    async execute(interaction, args, client, user) {
+    async execute(interaction, command, args, client, user) {
 
         const id = user.id;
     
