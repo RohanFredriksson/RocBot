@@ -38,7 +38,7 @@ client.on('interactionCreate', async interaction => {
         });
     }
 
-    execute(interaction, command, args, userData);
+    execute(interaction, command, args, user);
 
 });
 
@@ -58,12 +58,15 @@ client.login(token);
 
 function execute(interaction, command, args, user,) {
 
+    if (typeof client.commands.get(command) === undefined) {
+        return;
+    }
+
     if (client.commands.get(command).operatorOnly && !operators.includes(id)) {
         interaction.reply("You don't have sufficient permission to use this command");
         return;
     }
 
     client.commands.get(command).execute(interaction, args, client, user);
-    user.save();
 
 }

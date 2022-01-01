@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-
 const { reply, capitalizeFirstLetter } = require('../util.js');
-const { Pool } = require('../classes/pool.js');
 
 const name = 'addpool';
 const description = 'Create a new song pool for your profile!';
@@ -37,12 +35,13 @@ module.exports = {
 
         pool = args[0].toLowerCase();
 
-        if (user.getPool(pool) != null) {
+        if (user.hasPool(pool)) {
             reply(interaction, 'Pool already exists! Pools can not have the same name.');
             return;
         }
 
         user.addPool(pool);
+        user.save();
 
         reply(interaction, 'Pool \"' + capitalizeFirstLetter(pool) + '\" created!');
 

@@ -19,14 +19,14 @@ module.exports = {
 
         async hasSong(searchTerms) {
 
-            var url = await getUrl(searchTerms);
+            var url = await Pool.getUrl(searchTerms);
             return this.songs.has(url);
 
         }
 
         async getSong(searchTerms) {
 
-            var url = await getUrl(searchTerms);
+            var url = await Pool.getUrl(searchTerms);
             return this.songs.get(url);
 
         }
@@ -37,13 +37,13 @@ module.exports = {
                 return;
             }
 
-            await this.songs.set(getUrl(searchTerms), getSong(searchTerms));
+            this.songs.set(await Pool.getUrl(searchTerms), await Pool.getSong(searchTerms));
 
         }
 
         async removeSong(searchTerms) {
 
-            var url = await getUrl(searchTerms);
+            var url = await Pool.getUrl(searchTerms);
             this.songs.delete(url);
 
         }
@@ -61,10 +61,10 @@ module.exports = {
         }
 
         stringify() {
-
+                
             var songString = `{`;
             for (var [key, value] of this.songs.entries()) {
-                songString = songString + `"url":${key}:${value.stringify()},`;
+                songString = songString + `"${key}":${this.songs.get(key).stringify()},`;
             }
 
             if (this.songs.size > 0) {
@@ -91,7 +91,7 @@ module.exports = {
 
             } else {
 
-                var video = await videoFinder(args.join(' '));
+                var video = await Pool.videoFinder(searchTerms.join(' '));
                 if (video) {
                     return video.url;
                 } 
@@ -110,7 +110,7 @@ module.exports = {
 
             } else {
 
-                var video = await videoFinder(args.join(' '));
+                var video = await Pool.videoFinder(searchTerms.join(' '));
                 if (video) {
                     return new Song(video.title, video.url);
                 } 

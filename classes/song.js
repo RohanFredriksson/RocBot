@@ -13,7 +13,7 @@ module.exports = {
         }
 
         stringify() {
-            return `{"title":${this.title},"url:"${this.url}}`;
+            return `{"title":"${this.title}","url":"${this.url}"}`;
         }
 
     }

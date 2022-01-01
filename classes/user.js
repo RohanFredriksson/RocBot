@@ -20,12 +20,12 @@ module.exports = {
         }
 
         getPool(name) {
-            return this.pools.get(name)
+            return this.pools.get(name);
         }
 
         addPool(name) {
 
-            if (this.hasPool()) {
+            if (this.hasPool(name)) {
                 return;
             }
 
@@ -53,8 +53,7 @@ module.exports = {
             }
 
             poolString = poolString + '}';
-
-            return `{"id":"${this.id}","pools":${poolString}}`;
+            return JSON.stringify(JSON.parse(`{"id":"${this.id}","pools":${poolString}}`), null, 2);
 
         }
 
