@@ -51,7 +51,7 @@ module.exports = {
     },
 
     getVoiceChannel(interaction) {
-
+        return interaction.member.voice.channel;
     },
 
     titleCase(str) {

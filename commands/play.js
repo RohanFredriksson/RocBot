@@ -1,11 +1,11 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply, titleCase, getGuildId } = require('./../util.js');
-const { joinVoiceChannel } = require('@discordjs/voice');
-const { GuildWidgetStyle } = require('discord-api-types');
+const { reply, titleCase, getGuildId, getVoiceChannel } = require('./../util.js');
+const { Connection } = require('./../classes/connection.js');
+const connection = require('./../classes/connection.js');
 
 const name = 'play';
 const description = 'Play songs and queue song pools!';
-const aliases = ['playsong','playpool'];
+const aliases = ['playsong','playpool','join'];
 const operatorOnly = false;
 
 module.exports = {
@@ -47,25 +47,17 @@ module.exports = {
 
 	async execute(interaction, command, args, client, user) {
 
+        channel = getVoiceChannel(interaction);
         
+        if (channel == null) {
+            return;
+        }
+
+        conn = new Connection(channel);
+        conn.join();
+
+        setTimeout(() => {conn.disconnect()}, 5000);
 
 	}
 
 };
-
-const join = (interaction, serverQueue) => {
-
-    const connection = joinVoiceChannel({
-        channelId: channel.id,
-        guildId: channel.guild.id,
-        adapterCreator: channel.guild.voiceAdapterCreator 
-    });
-
-}
-
-const disconnect = (interaction, serverQueue) => {
-    
-}
-
-
-
