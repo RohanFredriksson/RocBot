@@ -24,7 +24,7 @@ module.exports = {
                 )
             ],
 
-    async execute(interaction, command, args, client, user) {
+    async execute(interaction, command, args, client, user, musicPlayer) {
 
         const id = user.id;
     

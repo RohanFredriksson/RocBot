@@ -45,7 +45,7 @@ module.exports = {
                 )
             ],
 
-	async execute(interaction, command, args, client, user) {
+	async execute(interaction, command, args, client, user, musicPlayer) {
 
         channel = getVoiceChannel(interaction);
         
@@ -56,7 +56,22 @@ module.exports = {
         conn = new Connection(channel);
         conn.join();
 
-        setTimeout(() => {conn.disconnect()}, 5000);
+        const { createAudioPlayer, NoSubscriberBehavior, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
+        const player = createAudioPlayer({
+            behaviors: {
+                noSubscriber: NoSubscriberBehavior.Pause,
+            }
+        });
+
+        const ytdl = require('ytdl-core');
+        stream = ytdl("https://www.youtube.com/watch?v=6ONRf7h3Mdk&ab_channel=TravisScottVEVO", { filter: 'audioonly' })
+        resource = createAudioResource(stream);
+        
+        conn.subscribe(player);
+        player.play(resource);
+
+        //setTimeout(() => {conn.disconnect()}, 10000);
+
 
 	}
 

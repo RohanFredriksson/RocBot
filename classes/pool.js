@@ -1,6 +1,7 @@
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
 const { Song } = require('./song');
+const { getRandomInt } = require('./../util.js');
 
 module.exports = {
 
@@ -14,6 +15,37 @@ module.exports = {
             
             this.name = name;
             this.songs = songs;
+
+        }
+
+        clear() {
+            this.songs = new Map();
+        }
+
+        getRandomSong() {
+
+            if (this.songs.size == 0) {
+                return null;
+            }
+
+            if (this.songs.size == 1) {
+                var song = this.getSongList()[0];
+                return song;
+            }
+
+            var song = this.getSongList()[getRandomInt(0,this.songs.size)];
+            return song;
+
+        }
+
+        getSongList() {
+
+            var list = [];
+            for (var song of this.songs.keys()) {
+                list.push(this.songs.get(song));
+            }
+
+            return list;
 
         }
 

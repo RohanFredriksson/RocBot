@@ -29,7 +29,7 @@ module.exports = {
                 )
             ],
 
-	async execute(interaction, command, args, client, user) {
+	async execute(interaction, command, args, client, user, musicPlayer) {
 
         const id = user.id;
 
@@ -63,10 +63,15 @@ module.exports = {
         await pool.addSong(args);
 
         song = await pool.getSong(args)
+        
+        if (song === undefined) {
+            return;
+        }
+
         title = song.title;
         user.save();
 
-        reply(interaction, 'Song "' + title + '" was successfully added to pool "' + titleCase(poolName) + '"');
+        //reply(interaction, 'Song "' + title + '" was successfully added to pool "' + titleCase(poolName) + '"');
 
 	}
 

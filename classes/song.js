@@ -3,7 +3,7 @@ module.exports = {
     Song: class Song {
 
         constructor(title, url) {
-            this.title = title;
+            this.title = title.replace(/['"]+/g, '');
             this.url = url;
         }
 

@@ -19,7 +19,7 @@ module.exports = {
 				.setDescription(description)
 			],
 
-	async execute(interaction, command, args, client, userData) {
+	async execute(interaction, command, args, client, userData, musicPlayer) {
 		await reply(interaction, 'Pong!');
 	}
 

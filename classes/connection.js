@@ -32,8 +32,8 @@ module.exports = {
 
         }
 
-        subscribe(audioPlayer) {
-            this.connection.subscribe(audioPlayer);
+        subscribe(player) {
+            this.connection.subscribe(player);
         }
 
         unsubscribe() {
