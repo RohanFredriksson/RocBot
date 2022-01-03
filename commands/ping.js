@@ -18,7 +18,7 @@ module.exports = {
 				.setDescription(description)
 			],
 
-	async execute(interaction, command, args, client, userData, audioPlayer) {
+	async execute(interaction, command, args, client, userData, audioPlayerManager) {
 		interaction.send('Pong!');
 	}
 

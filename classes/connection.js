@@ -10,6 +10,7 @@ module.exports = {
             this.guildId = channel.guild.id;
             this.adapterCreator = channel.guild.voiceAdapterCreator;
             this.connection = null;
+            this.subscription = null;
             
         }
 
@@ -33,11 +34,15 @@ module.exports = {
         }
 
         subscribe(player) {
-            this.connection.subscribe(player);
+            this.subscription = this.connection.subscribe(player);
         }
 
         unsubscribe() {
-            this.connection.unsubscribe();
+            
+            if (this.subscription != null) {
+                this.subscription.unsubscribe();
+            }
+
         }
 
     }

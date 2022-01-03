@@ -4,7 +4,8 @@ module.exports = {
 
     Queue: class Queue {
 
-        constructor() {
+        constructor(interaction) {
+            this.interaction = interaction;
             this.songs = [];
         }
 
@@ -20,6 +21,10 @@ module.exports = {
 
         clear() {
             this.songs = [];
+        }
+
+        setInteraction(interaction) {
+            this.interaction = interaction;
         }
 
         async addSong(searchTerms) {

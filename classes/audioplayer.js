@@ -1,4 +1,4 @@
-const { createAudioPlayer, NoSubscriberBehavior, AudioPlayerStatus } = require("@discordjs/voice")
+const { createAudioPlayer, createAudioResource, NoSubscriberBehavior, AudioPlayerStatus } = require("@discordjs/voice")
 const { Connection } = require('./connection.js');
 const { SongHandler } = require('./songhandler.js');
 
@@ -8,12 +8,14 @@ module.exports = {
 
     AudioPlayer: class AudioPlayer {
 
-        constructor(channel) {
+        constructor(channel, interaction, audioPlayerManager) {
+
+            this.channel = channel;
+            this.interaction = interaction;
+            this.audioPlayerManager = audioPlayerManager;
 
             this.connection = new Connection(channel);
-            this.songHandler = new SongHandler();
-
-            this.joined = false;
+            this.songHandler = new SongHandler(interaction);
 
             this.audioPlayer = createAudioPlayer({
                 behaviors: {
@@ -26,25 +28,41 @@ module.exports = {
             });
 
             this.audioPlayer.on(AudioPlayerStatus.Idle, () => {
-                this.audioPlayer.skip();
+
+                if (this.channel.members.size == 1) {
+                    this.disconnect();
+                }
+
+                this.skip();
+
             })
 
-        }
-
-        join() {    
             this.connection.join();
-            this.joined = true;
+            this.connection.subscribe(this.audioPlayer);
+
+            this.emptyChecker = setInterval(() => {
+
+                if (this.channel.members.size == 1) {
+                    this.disconnect();
+                }
+
+            }, 5000);
+
+            this.isPlaying = false;
+
         }
 
         disconnect() {
+            clearInterval(this.emptyChecker);
+            this.connection.unsubscribe();
             this.connection.disconnect();
-            this.joined = false;
+            this.audioPlayerManager.removePlayer(this.channel.guild.id);
         }
 
         play(url) {
-            const stream = ytdl(url, { filter: 'audioonly' })
-            const resource = createAudioResource(stream);
-            this.player.play(resource);
+            var stream = ytdl(url, { filter: 'audioonly' })
+            var resource = createAudioResource(stream);
+            this.audioPlayer.play(resource);
         }
 
         pause() {
@@ -65,12 +83,52 @@ module.exports = {
             }
 
             this.unpause();
-            this.audioPlayer.play(song.url);
+            this.play(song.url);
 
         }
 
+        setPool(pool) {
+            
+            this.songHandler.setPool(pool);
+
+            if(!this.isPlaying) {
+                this.isPlaying = true;
+                this.skip();
+            }
+
+        }
+
+        setChannel(channel) {
+
+            if (channel == null) {
+                throw new Error('Channel can not be null.');
+            }
+
+            if (this.channel.id == channel.id) {
+                return;
+            }
+
+            this.connection.unsubscribe();
+            this.connection.disconnect();
+            this.connection = new Connection(channel);
+            this.connection.subscribe(this.audioPlayer);
+
+        }
+
+        setInteraction(interaction) {
+            this.interaction = interaction;
+            this.songHandler.setInteraction(interaction);
+        }
+
         async addSong(searchTerms) {
+            
             this.songHandler.addSong(searchTerms);
+
+            if(!this.isPlaying) {
+                this.isPlaying = true;
+                this.skip();
+            }
+
         }
 
     }

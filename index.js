@@ -1,9 +1,10 @@
 const fs = require('fs');
 const { Client, Intents, ClientVoiceManager, Collection } = require('discord.js');
-const { token } = require('./config.json');
+const { AudioPlayerManager } = require('./classes/audioplayermanager.js');
 const { User } = require('./classes/user.js');
-const { getGuildId } = require('./util.js');
 const { Interaction } = require('./classes/interaction.js');
+
+const { token } = require('./config.json');
 
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 client.commands = new Collection();
@@ -24,8 +25,8 @@ for (const file of commandFiles) {
 
 }
 
-// Set up a music player map.
-const audioPlayers = new Map();
+// Audio Player Manager.
+const audioPlayerManager = new AudioPlayerManager();
 
 client.once('ready', () => {
     console.log('RocBot is now online!');
@@ -65,7 +66,7 @@ client.login(token);
 
 function execute(interaction, command, args, user) {
 
-    if (typeof client.commands.get(command) === undefined) {
+    if (typeof client.commands.get(command) === 'undefined') {
         return;
     }
 
@@ -76,6 +77,6 @@ function execute(interaction, command, args, user) {
         return;
     }
 
-    client.commands.get(command).execute(interaction, command, args, client, user, audioPlayers);
+    client.commands.get(command).execute(interaction, command, args, client, user, audioPlayerManager);
 
 }

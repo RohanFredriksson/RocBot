@@ -4,33 +4,51 @@ module.exports = {
 
     SongHandler: class SongHandler {
 
-        constructor(pool) {
+        constructor(interaction) {
 
-            if (pool === undefined) {
-                this.pool = null;
-                this.queue = new Queue();
-            }
+            this.interaction = interaction;
 
-            else {
-                this.pool = pool;
-                this.queue = null;
-            }
-            
+            this.pool = null;
+            this.queue = new Queue(interaction);
+
         }
 
         getNext() {
 
+            var song = null;
+
             if (this.queue != null) {
-                return this.queue.getNext();
+                
+                song = this.queue.getNext();
+
+                if (song != null) {
+                    return song;
+                }
+
             }
 
-            else if (this.pool != null) {
-                return this.pool.getRandomSong();
+            if (this.pool != null) {
+
+                song = this.pool.getRandomSong();
+
+                if (song != null) {
+                    return song;
+                }
+
             }
 
             this.queue = new Queue();
-            return null;
+            return song;
 
+        }
+
+        setPool(pool) {
+            this.pool = pool;
+        }
+
+        setInteraction(interaction) {
+            this.interaction = interaction;  
+            this.queue.setInteraction(interaction); 
         }
 
         async addSong(searchTerms) {

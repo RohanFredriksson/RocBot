@@ -1,5 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Connection } = require('./../classes/connection.js');
+const { SlashCommandBuilder, channelMention } = require('@discordjs/builders');
+const { titleCase } = require('./../util.js');
 
 const name = 'play';
 const description = 'Play songs and queue song pools!';
@@ -43,33 +43,47 @@ module.exports = {
                 )
             ],
 
-	async execute(interaction, command, args, client, user, audioPlayer) {
+	async execute(interaction, command, args, client, user, audioPlayerManager) {
 
-        channel = interaction.getVoiceChannel();
-        
-        if (channel == null) {
+        if (args.length < 1) {
+            interaction.send('Not enough arguments! Please specify a song or pool.');
             return;
         }
 
-        conn = new Connection(channel);
-        conn.join();
+        channel = interaction.getVoiceChannel();
 
-        const { createAudioPlayer, NoSubscriberBehavior, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
-        const player = createAudioPlayer({
-            behaviors: {
-                noSubscriber: NoSubscriberBehavior.Pause,
-            }
-        });
+        if (channel == null) {
+            interaction.send('Please join a voice channel to play a song!');
+            return;
+        }   
 
-        const ytdl = require('ytdl-core');
-        stream = ytdl("https://www.youtube.com/watch?v=6ONRf7h3Mdk&ab_channel=TravisScottVEVO", { filter: 'audioonly' })
-        resource = createAudioResource(stream);
+        interaction.defer();
+        guildId = interaction.getGuildId();
+
+        // Create a new audio player if one doesn't exist.
+        if (!audioPlayerManager.hasPlayer(guildId)) {
+            audioPlayerManager.createPlayer(guildId, channel, interaction);
+        } 
         
-        conn.subscribe(player);
-        player.play(resource);
+        // Update the channel and interaction objects in the audio player if it exists.
+        else {
+            audioPlayerManager.updatePlayer(guildId, channel, interaction);
+        }
 
-        //setTimeout(() => {conn.disconnect()}, 10000);
+        audioPlayer = audioPlayerManager.getPlayer(guildId);
 
+        // Check if the user entered a pool name, set the pool.
+        if (user.hasPool(args[0].toLowerCase())) {
+
+            poolName = args[0].toLowerCase();
+            audioPlayer.setPool(user.getPool(poolName));
+            
+            interaction.send(`Now playing from pool "${titleCase(poolName)}".`);
+            return;
+
+        }
+
+        audioPlayer.addSong(args);
 
 	}
 

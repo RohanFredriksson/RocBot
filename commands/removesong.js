@@ -29,17 +29,17 @@ module.exports = {
                 )
             ],
 
-	async execute(interaction, command, args, client, user, audioPlayer) {
+	async execute(interaction, command, args, client, user, audioPlayerManager) {
 
         const id = user.id;
 
         if (args.length < 1) {
-            interaction.send('No song pool provided! Please specify a song pool to add a song in.');
+            interaction.send('No song pool provided! Please specify a song pool to remove a song from.');
             return;
         }
 
         if (args.length < 2) {
-            interaction.send('No song provided! To add a song please enter some search terms or a YouTube link.');
+            interaction.send('No song provided! To remove a song please enter some search terms or a YouTube link.');
             return;
         }
 
