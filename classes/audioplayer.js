@@ -13,6 +13,8 @@ module.exports = {
             this.connection = new Connection(channel);
             this.songHandler = new SongHandler();
 
+            this.joined = false;
+
             this.audioPlayer = createAudioPlayer({
                 behaviors: {
                     noSubscriber: NoSubscriberBehavior.Pause,
@@ -23,6 +25,20 @@ module.exports = {
                 console.error(error);
             });
 
+            this.audioPlayer.on(AudioPlayerStatus.Idle, () => {
+                this.audioPlayer.skip();
+            })
+
+        }
+
+        join() {    
+            this.connection.join();
+            this.joined = true;
+        }
+
+        disconnect() {
+            this.connection.disconnect();
+            this.joined = false;
         }
 
         play(url) {
@@ -44,7 +60,7 @@ module.exports = {
             var song = this.songHandler.getNext();
             
             if (song == null) {
-                this.pause();
+                this.disconnect();
                 return;
             }
 
@@ -54,11 +70,7 @@ module.exports = {
         }
 
         async addSong(searchTerms) {
-
-        }
-
-        disconnect() {
-            this.connection.disconnect();
+            this.songHandler.addSong(searchTerms);
         }
 
     }

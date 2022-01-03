@@ -25,7 +25,7 @@ for (const file of commandFiles) {
 }
 
 // Set up a music player map.
-const musicPlayers = new Map();
+const audioPlayers = new Map();
 
 client.once('ready', () => {
     console.log('RocBot is now online!');
@@ -76,13 +76,6 @@ function execute(interaction, command, args, user) {
         return;
     }
 
-    //musicPlayer = musicPlayers.get(getGuildID(interaction));
-    //if (musicPlayer === undefined) {
-    //    musicPlayer = null;
-    //}
-
-    musicPlayer = null;
-
-    client.commands.get(command).execute(interaction, command, args, client, user, musicPlayer);
+    client.commands.get(command).execute(interaction, command, args, client, user, audioPlayers);
 
 }

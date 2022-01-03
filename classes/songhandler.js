@@ -29,6 +29,7 @@ module.exports = {
             }
 
             this.queue = new Queue();
+            return null;
 
         }
 

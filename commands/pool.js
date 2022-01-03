@@ -23,7 +23,7 @@ module.exports = {
                 )
             ],
 
-    async execute(interaction, command, args, client, user, musicPlayer) {
+    async execute(interaction, command, args, client, user, audioPlayer) {
 
         if (args.length < 1) {
             interaction.send('Not enough arguments!')
@@ -41,8 +41,8 @@ module.exports = {
         list = '';
 
         songs = pool.songs;
-        for (var [key, value] of songs.entries()) {
-            list = list + value.title + '\n';
+        for (var i = 0; i < pool.songs.length; i++) {
+            list = list + pool.songs[i].title + '\n';
         }
 
         interaction.send(list)

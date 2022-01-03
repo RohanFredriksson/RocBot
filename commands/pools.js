@@ -18,7 +18,7 @@ module.exports = {
                 .setDescription(description)
             ],
 
-    async execute(interaction, command, args, client, user, musicPlayer) {
+    async execute(interaction, command, args, client, user, audioPlayer) {
 
         list = '';
 
