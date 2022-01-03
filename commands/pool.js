@@ -1,4 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
+const { titleCase } = require('./../util.js');
 
 const name = 'pool';
 const description = 'List all the songs in a pool on your profile!';
@@ -38,14 +40,29 @@ module.exports = {
             return;
         }
 
-        list = '';
+        const embed = new MessageEmbed()
+            .setColor('FFA500')
+            .setTitle(`${titleCase(pool.name)}`);
 
         songs = pool.songs;
-        for (var i = 0; i < pool.songs.length; i++) {
-            list = list + pool.songs[i].title + '\n';
+
+        if (songs.length == 0) {
+            embed.setDescription('Hmm, this seems to be empty.');
         }
 
-        interaction.send(list);
+        else {
+
+            list = '';
+            for (i = 0; i < songs.length; i++) {
+                song = songs[i];
+                list = list + `${i+1}. **${song.title}**\n`;
+            }
+
+            embed.setDescription(list);
+
+        }
+
+        interaction.send({embeds: [embed]});
 
 	}
 

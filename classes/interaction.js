@@ -95,6 +95,16 @@ module.exports = {
             return this.interaction.member.voice.channel;
         }
 
+        getUsername() {
+
+            if (!this.isInteraction) {
+                return this.interaction.author.username;
+            }
+    
+            return this.interaction.user.username;
+
+        }
+
     }
 
 }
