@@ -83,7 +83,7 @@ module.exports = {
 
         }
 
-        audioPlayer.addSong(args);
+        await audioPlayer.addSong(args);
 
 	}
 

@@ -76,7 +76,6 @@ module.exports = {
         skip() {
 
             var song = this.songHandler.getNext();
-            console.log(song);
             
             if (song == null) {
                 this.disconnect();
@@ -123,7 +122,7 @@ module.exports = {
 
         async addSong(searchTerms) {
             
-            this.songHandler.addSong(searchTerms);
+            await this.songHandler.addSong(searchTerms);
 
             if(!this.isPlaying) {
                 this.isPlaying = true;
