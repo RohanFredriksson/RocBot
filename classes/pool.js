@@ -13,6 +13,8 @@ module.exports = {
             
             this.name = name;
             this.songs = songs;
+            this.head = 0;
+            this.lastSong = null;
 
         }
 
@@ -20,17 +22,43 @@ module.exports = {
             this.songs = [];
         }
 
-        getRandomSong() {
+        getNext() {
 
             if (this.songs.length == 0) {
                 return null;
             }
 
+            if (this.head >= this.songs.length) {
+                this.head = 0;
+            }
+
+            var song = this.songs[this.head];
+            this.head = this.head + 1;
+            return song;
+
+        }
+
+        getRandomSong() {
+
+            if (this.songs.length == 0) {
+                this.lastSong = null;
+                return null;
+            }
+
             if (this.songs.length == 1) {
+                this.lastSong = this.songs[0];
                 return this.songs[0];
             }
 
-            return this.songs[getRandomInt(0,this.songs.length-1)];
+            var song = this.songs[getRandomInt(0,this.songs.length-1)];
+
+            if (!this.lastSong == null) {
+                while (song.url == this.lastSong.url) {
+                    song = this.songs[getRandomInt(0,this.songs.length-1)];
+                }
+            }
+            
+            return song;
 
         }
 

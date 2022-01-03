@@ -134,6 +134,10 @@ module.exports = {
 
         }
 
+        toggleShuffle() {
+            this.songHandler.toggleShuffle();
+        }
+
     }
 
 }

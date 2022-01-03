@@ -10,6 +10,7 @@ module.exports = {
 
             this.pool = null;
             this.queue = new Queue(interaction);
+            this.shuffle = true;
 
         }
 
@@ -29,7 +30,13 @@ module.exports = {
 
             if (this.pool != null) {
 
-                song = this.pool.getRandomSong();
+                if (this.shuffle) {
+                    song = this.pool.getRandomSong();
+                }
+
+                else {
+                    song = this.pool.getNext();
+                }
 
                 if (song != null) {
                     return song;
@@ -39,6 +46,22 @@ module.exports = {
 
             this.queue = new Queue();
             return song;
+
+        }
+
+        toggleShuffle() {
+
+            this.shuffle = !this.shuffle;
+
+            if (this.shuffle) {
+                this.interaction.send(`🔀 **|** **Shuffle: On**`);
+                return;
+            }
+
+            else {
+                this.interaction.send(`🔀 **|** **Shuffle: Off**`);
+                return;
+            }
 
         }
 
