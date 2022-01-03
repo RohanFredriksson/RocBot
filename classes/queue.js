@@ -1,5 +1,3 @@
-const ytdl = require('ytdl-core');
-const ytSearch = require('yt-search');
 const { Song } = require('./song');
 
 module.exports = {
@@ -25,61 +23,18 @@ module.exports = {
         }
 
         async addSong(searchTerms) {
-            this.songs.push(await Queue.getSong(searchTerms));
+            this.songs.push(await Song.getSong(searchTerms));
         }
 
         async removeSong(searchTerms) {
 
-            var url = await Queue.getUrl(searchTerms);
+            var url = await Song.getUrl(searchTerms);
             for (var i = 0; i < this.songs.length; i++) {
                 
                 if (this.songs[i].url == url) {
                     this.songs.splice(i, 1);
                     return;
                 }
-
-            }
-
-        }
-
-        static async getUrl(searchTerms) {
-
-            if (ytdl.validateURL(searchTerms)) {
-
-                var songInfo = await ytdl.getInfo(searchTerms);
-                return songInfo.videoDetails.video_url;
-
-            } else {
-
-                var video = await Queue.videoFinder(searchTerms.join(' '));
-                if (video) {
-                    return video.url;
-                } 
-                return null;
-
-            }
-
-        }
-
-        static async videoFinder(query) {
-            var videoResult = await ytSearch(query);
-            return (videoResult.videos.length > 1) ? videoResult.videos[0] : null;
-        }
-
-        static async getSong(searchTerms) {
-
-            if (ytdl.validateURL(searchTerms)) {
-
-                var songInfo = await ytdl.getInfo(searchTerms);
-                return new Song(songInfo.videoDetails.title, songInfo.videoDetails.video_url);
-
-            } else {
-
-                var video = await Queue.videoFinder(searchTerms.join(' '));
-                if (video) {
-                    return new Song(video.title, video.url);
-                } 
-                return null;
 
             }
 

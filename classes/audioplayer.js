@@ -1,19 +1,25 @@
-const { createAudioPlayer, NoSubscriberBehavior } = require("@discordjs/voice")
+const { createAudioPlayer, NoSubscriberBehavior, AudioPlayerStatus } = require("@discordjs/voice")
+const { Connection } = require('./connection.js');
+const { SongHandler } = require('./songhandler.js');
+
 const ytdl = require('ytdl-core');
 
 module.exports = {
 
     AudioPlayer: class AudioPlayer {
 
-        constructor() {
+        constructor(channel) {
 
-            this.player = createAudioPlayer({
+            this.connection = new Connection(channel);
+            this.songHandler = new SongHandler();
+
+            this.audioPlayer = createAudioPlayer({
                 behaviors: {
                     noSubscriber: NoSubscriberBehavior.Pause,
                 }
             });
 
-            this.player.on('error', error => {
+            this.audioPlayer.on('error', error => {
                 console.error(error);
             });
 
@@ -26,11 +32,33 @@ module.exports = {
         }
 
         pause() {
-            this.player.pause();
+            this.audioPlayer.pause();
         }
 
         unpause() {
-            this.player.unpause();
+            this.audioPlayer.unpause();
+        }
+
+        skip() {
+
+            var song = this.songHandler.getNext();
+            
+            if (song == null) {
+                this.pause();
+                return;
+            }
+
+            this.unpause();
+            this.audioPlayer.play(song.url);
+
+        }
+
+        async addSong(searchTerms) {
+
+        }
+
+        disconnect() {
+            this.connection.disconnect();
         }
 
     }

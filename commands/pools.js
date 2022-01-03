@@ -23,9 +23,9 @@ module.exports = {
         list = '';
 
         pools = user.pools;
-        for (var [key, value] of pools.entries()) {
-            list = list + key + '\n';
-        }
+        pools.forEach(pool => {
+            list = list + pool.name + '\n';
+        });
 
         interaction.send(list);
 

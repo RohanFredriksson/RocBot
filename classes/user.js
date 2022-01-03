@@ -8,7 +8,7 @@ module.exports = {
         constructor(id, pools) {
 
             if (pools === undefined) {
-                pools = new Map();
+                pools = [];
             }
 
             this.id = id;
@@ -16,11 +16,30 @@ module.exports = {
         }
 
         hasPool(name) {
-            return this.pools.has(name);
+
+            for (var i = 0; i < this.pools.length; i++) {
+
+                if (this.pools[i].name == name) {
+                    return true;
+                }
+
+            }
+
+            return false;
         }
 
         getPool(name) {
-            return this.pools.get(name);
+            
+            for (var i = 0; i < this.pools.length; i++) {
+
+                if (this.pools[i].name == name) {
+                    return this.pools[i];
+                }
+
+            }
+
+            return null;
+
         }
 
         addPool(name) {
@@ -29,12 +48,21 @@ module.exports = {
                 return;
             }
 
-            this.pools.set(name, new Pool(name));
+            this.pools.push(new Pool(name));
 
         }
 
         removePool(name) {
-            this.pools.delete(name);
+            
+            for (var i = 0; i < this.pools.length; i++) {
+
+                if (this.pools[i].name == name) {
+                    this.pools.splice(i, 1);
+                    return;
+                }
+
+            }
+
         }
 
         save() {
@@ -42,19 +70,7 @@ module.exports = {
         }
 
         stringify() {
-
-            var poolString = '{';
-            for (var [key, value] of this.pools.entries()) {
-                poolString = poolString + `"${key}":${value.stringify()},`;
-            }
-
-            if (this.pools.size > 0) {
-                poolString = poolString.slice(0, -1);
-            }
-
-            poolString = poolString + '}';
-            return JSON.stringify(JSON.parse(`{"id":"${this.id}","pools":${poolString}}`), null, 2);
-
+            return JSON.stringify(this, null, 2);
         }
 
         static load(id) {
@@ -76,9 +92,8 @@ module.exports = {
                 }
                 
             }
-    
             var newUser = new User(id);
-            newUser.save();
+            //newUser.save();
             return newUser;
 
         }
@@ -86,11 +101,11 @@ module.exports = {
         static parse(str) {
 
             var json = JSON.parse(str);
-            
-            var newPools = new Map();
-            Object.keys(json.pools).forEach(pool => {
-                newPools.set(pool, Pool.parse(JSON.stringify(json.pools[pool])));
-            });
+
+            var newPools = [];
+            for (var i = 0; i < json.pools.length; i++) {
+                newPools.push(Pool.parse(JSON.stringify(json.pools[i])));
+            }
 
             return new User(json.id, newPools);
         }

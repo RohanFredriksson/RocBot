@@ -58,12 +58,12 @@ module.exports = {
             return;
         }
 
+        song = await pool.getSong(args)
+        title = song.title;
+
         if (song === undefined) {
             return;
         }
-
-        song = await pool.getSong(args)
-        title = song.title;
 
         await pool.removeSong(args);
         user.save();
