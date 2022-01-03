@@ -34,12 +34,12 @@ module.exports = {
         const id = user.id;
 
         if (args.length < 1) {
-            interaction.send('No song pool provided! Please specify a song pool to add a song in.');
+            interaction.send('🚫 **|** Not enough arguments! Please specify a song pool to add a song in');
             return;
         }
 
         if (args.length < 2) {
-            interaction.send('No song provided! To add a song please enter some search terms or a YouTube link.');
+            interaction.send('🚫 **|** Not enough arguments! To add a song please enter some search terms or a YouTube link');
             return;
         }
 
@@ -49,7 +49,7 @@ module.exports = {
         pool = user.getPool(poolName);
 
         if (pool == null) {
-            interaction.send('Pool "' + titleCase(poolName) + '" could not be found.');
+            interaction.send(`🚫 **|** Pool "${titleCase(poolName)}" could not be found`);
             return;
         }
 
@@ -58,7 +58,7 @@ module.exports = {
             song = await pool.getSong(args)
             title = song.title;
 
-            interaction.send('Song "' + title + '" is already in pool "' + titleCase(poolName) + '"')
+            interaction.send(`🚫 **|** Song "${title}" is already in pool "${titleCase(poolName)}`);
             return;
         }
 
@@ -73,7 +73,7 @@ module.exports = {
         title = song.title;
         user.save();
 
-        interaction.send('Song "' + title + '" was successfully added to pool "' + titleCase(poolName) + '"')
+        interaction.send(`✅ **|** Song **${title}** was successfully added to pool **${titleCase(poolName)}**`);
 
 	}
 

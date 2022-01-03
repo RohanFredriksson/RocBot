@@ -29,21 +29,21 @@ module.exports = {
         const id = user.id;
     
         if (args.length < 1) {
-            reply(interaction, 'Not enough arguments!');
+            interaction.send('🚫 **|** Not enough arguments! Please enter a name for the new song pool');
             return;
         }
 
         pool = args[0].toLowerCase();
 
         if (user.hasPool(pool)) {
-            interaction.send('Pool already exists! Pools can not have the same name.');
+            interaction.send('🚫 **|** Song pool already exists! Song pools can not have the same name');
             return;
         }
 
         user.addPool(pool);
         user.save();
 
-        interaction.send('Pool \"' + titleCase(pool) + '\" created!')
+        interaction.send(`✅ **|** Pool **${titleCase(pool)}** created!`)
 
 	}
 

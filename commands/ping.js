@@ -19,7 +19,7 @@ module.exports = {
 			],
 
 	async execute(interaction, command, args, client, userData, audioPlayerManager) {
-		interaction.send('Pong!');
+		interaction.send('👋 **|** Pong!');
 	}
 
 };

@@ -34,12 +34,12 @@ module.exports = {
         const id = user.id;
 
         if (args.length < 1) {
-            interaction.send('No song pool provided! Please specify a song pool to remove a song from.');
+            interaction.send('🚫 **|** Not enough arguments! Please specify a song pool to remove a song from');
             return;
         }
 
         if (args.length < 2) {
-            interaction.send('No song provided! To remove a song please enter some search terms or a YouTube link.');
+            interaction.send('🚫 **|** Not enough arguments! To remove a song please enter some search terms or a YouTube link');
             return;
         }
 
@@ -49,12 +49,12 @@ module.exports = {
         pool = user.getPool(poolName);
 
         if (pool == null) {
-            interaction.send('Pool "' + titleCase(poolName) + '" could not be found.');
+            interaction.send(`🚫 **|** Pool **${titleCase(poolName)}** could not be found`);
             return;
         }
 
-        if (await !pool.hasSong(args)) {
-            interaction.send('Song requested is not in pool "' + titleCase(poolName) + '"');
+        if (!pool.hasSong(args)) {
+            interaction.send(`🚫 **|** Song requested is not in pool **${titleCase(poolName)}**`);
             return;
         }
 
@@ -68,7 +68,7 @@ module.exports = {
         await pool.removeSong(args);
         user.save();
 
-        interaction.send('Song "' + title + '" was successfully removed from pool "' + titleCase(poolName) + '"');
+        interaction.send(`🗑️ **|** Song **${title}** was successfully removed from pool **${titleCase(poolName)}**`);
 
 	}
 

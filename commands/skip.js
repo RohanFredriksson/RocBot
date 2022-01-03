@@ -23,15 +23,15 @@ module.exports = {
         channel = interaction.getVoiceChannel();
 
         if (channel == null) {
-            interaction.send('Im not in a voice channel!');
+            interaction.send('🚫 **|** To use this command, I must be in a voice channel!');
             return;
         }   
 
         guildId = interaction.getGuildId();
 
-        // Create a new audio player if one doesn't exist.
+        // See if an audio player has been created for the channel.
         if (!audioPlayerManager.hasPlayer(guildId)) {
-            interaction.send('Im not in a voice channel!');
+            interaction.send('🚫 **|** To use this command, I must be in a voice channel!');
             return;
         } 
         
@@ -41,7 +41,7 @@ module.exports = {
         }
 
         audioPlayer = audioPlayerManager.getPlayer(guildId);
-        interaction.send('Skipped.');
+        interaction.send('⏭️ **|** **Skipped**');
         audioPlayer.skip();
 
 	}

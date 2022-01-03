@@ -29,21 +29,21 @@ module.exports = {
         const id = user.id;
     
         if (args.length < 1) {
-            interaction.send('Not enough arguments!');
+            interaction.send('🚫 **|** Not enough arguments! Please specify the name of the song pool you wish to remove');
             return;
         }
 
         pool = args[0].toLowerCase();
 
         if (!user.hasPool(pool)) {
-            interaction.send('Pool does not exist! Nothing happened.')
+            interaction.send('🚫 **|** Pool does not exist! Nothing happened')
             return;
         }
 
         user.removePool(pool);
         user.save();
 
-        interaction.send('Pool \"' + titleCase(pool) + '\" removed!');
+        interaction.send(`🗑️ **|** Pool **${titleCase(pool)}** was successfully removed!`);
 
 	}
 

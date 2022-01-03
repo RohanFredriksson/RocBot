@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const name = 'disconnect';
 const description = 'Disconnect the music bot.';
-const aliases = [];
+const aliases = ['dc','fuckoff'];
 const operatorOnly = false;
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
         channel = interaction.getVoiceChannel();
 
         if (channel == null) {
-            interaction.send('Im not in a voice channel!');
+            interaction.send('🚫 **|** To use this command, I must be in a voice channel!');
             return;
         }   
 
@@ -31,7 +31,7 @@ module.exports = {
 
         // Create a new audio player if one doesn't exist.
         if (!audioPlayerManager.hasPlayer(guildId)) {
-            interaction.send('Im not in a voice channel!');
+            interaction.send('🚫 **|** To use this command, I must be in a voice channel!');
             return;
         } 
         
@@ -41,7 +41,7 @@ module.exports = {
         }
 
         audioPlayer = audioPlayerManager.getPlayer(guildId);
-        interaction.send('Disconnected.');
+        interaction.send('👋 **|** Bye!');
         audioPlayer.disconnect();
 
 	}

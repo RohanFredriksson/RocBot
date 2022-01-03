@@ -3,7 +3,7 @@ const { titleCase } = require('./../util.js');
 
 const name = 'play';
 const description = 'Play songs and queue song pools!';
-const aliases = ['playsong','playpool','join'];
+const aliases = ['p','playsong','playpool'];
 const operatorOnly = false;
 
 module.exports = {
@@ -46,14 +46,14 @@ module.exports = {
 	async execute(interaction, command, args, client, user, audioPlayerManager) {
 
         if (args.length < 1) {
-            interaction.send('Not enough arguments! Please specify a song or pool.');
+            interaction.send('🚫 **|** Not enough arguments! Please specify a song or pool');
             return;
         }
 
         channel = interaction.getVoiceChannel();
 
         if (channel == null) {
-            interaction.send('Please join a voice channel to play a song!');
+            interaction.send('🚫 **|** To use this command, I must be in a voice channel!');
             return;
         }   
 
@@ -78,7 +78,7 @@ module.exports = {
             poolName = args[0].toLowerCase();
             audioPlayer.setPool(user.getPool(poolName));
             
-            interaction.send(`Now playing from pool "${titleCase(poolName)}".`);
+            interaction.send(`🎶 **|** Now playing from pool **${titleCase(poolName)}**`);
             return;
 
         }

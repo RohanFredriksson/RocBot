@@ -26,7 +26,7 @@ module.exports = {
     async execute(interaction, command, args, client, user, audioPlayerManager) {
 
         if (args.length < 1) {
-            interaction.send('Not enough arguments!')
+            interaction.send('🚫 **|** Not enough arguments! Please enter a song pool name')
             return;
         }
 
@@ -34,7 +34,7 @@ module.exports = {
         pool = user.getPool(poolName);
 
         if (pool == null) {
-            interaction.send('Pool does not exist!')
+            interaction.send('🚫 **|** Pool does not exist!')
             return;
         }
 

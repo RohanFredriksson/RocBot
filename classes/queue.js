@@ -28,7 +28,9 @@ module.exports = {
         }
 
         async addSong(searchTerms) {
-            this.songs.push(await Song.getSong(searchTerms));
+            var song = await Song.getSong(searchTerms);
+            this.songs.push(song);
+            this.interaction.send(`✅ **|** **${song.title}** added to the queue.`);
         }
 
         async removeSong(searchTerms) {

@@ -53,10 +53,12 @@ module.exports = {
         }
 
         disconnect() {
+
             clearInterval(this.emptyChecker);
             this.connection.unsubscribe();
             this.connection.disconnect();
             this.audioPlayerManager.removePlayer(this.channel.guild.id);
+
         }
 
         play(url) {
@@ -84,6 +86,7 @@ module.exports = {
 
             this.unpause();
             this.play(song.url);
+            this.interaction.send(`🎵 **|** Now playing: **${song.title}**`);
 
         }
 
