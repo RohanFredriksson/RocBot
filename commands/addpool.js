@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply, titleCase } = require('../util.js');
+const { titleCase } = require('../util.js');
 
 const name = 'addpool';
 const description = 'Create a new song pool for your profile!';

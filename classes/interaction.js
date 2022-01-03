@@ -32,7 +32,7 @@ module.exports = {
 
         }
 
-        async send(output) {
+        send(output) {
 
             if (!this.isInteraction) {
                 this.interaction.channel.send(output);
@@ -69,6 +69,30 @@ module.exports = {
                 
             }
 
+        }
+
+        getUserId() {
+
+            if (!this.isInteraction) {
+                return this.interaction.author.id;
+            }
+
+            return interaction.user.id;;
+
+        }
+
+        getGuildId() {
+
+            if (!this.isInteraction) {
+                return this.interaction.member.guild.id;
+            }
+    
+            return interaction.guildId;
+    
+        }
+
+        getVoiceChannel() {
+            return this.interaction.member.voice.channel;
         }
 
     }

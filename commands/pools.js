@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply, titleCase } = require('../util.js');
 
 const name = 'pools';
 const description = 'List all the pool on your profile!';

@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply, getGuildId, getUserId } = require('./../util.js');
 
 const name = 'ping';
 const description = 'Replies with Pong';
@@ -20,9 +19,7 @@ module.exports = {
 			],
 
 	async execute(interaction, command, args, client, userData, musicPlayer) {
-		interaction.send('Pong 1');
-		interaction.send('Pong 2');
-		interaction.send('Pong 3')
+		interaction.send('Pong!');
 	}
 
 };

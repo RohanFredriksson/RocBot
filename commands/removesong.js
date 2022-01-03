@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply, titleCase, deferReply } = require('./../util.js');
+const { titleCase } = require('./../util.js');
 
 const name = 'removesong';
 const description = 'Remove songs from existing pools!';

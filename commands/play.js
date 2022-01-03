@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply, titleCase, getGuildId, getVoiceChannel } = require('./../util.js');
 const { Connection } = require('./../classes/connection.js');
-const connection = require('./../classes/connection.js');
 
 const name = 'play';
 const description = 'Play songs and queue song pools!';
@@ -47,7 +45,7 @@ module.exports = {
 
 	async execute(interaction, command, args, client, user, musicPlayer) {
 
-        channel = getVoiceChannel(interaction);
+        channel = interaction.getVoiceChannel();
         
         if (channel == null) {
             return;
