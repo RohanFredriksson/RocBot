@@ -76,6 +76,7 @@ module.exports = {
         skip() {
 
             var song = this.songHandler.getNext();
+            console.log(song);
             
             if (song == null) {
                 this.disconnect();

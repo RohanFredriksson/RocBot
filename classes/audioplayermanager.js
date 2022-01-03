@@ -29,6 +29,7 @@ module.exports = {
 
             var newPlayer = new AudioPlayer(channel, interaction, this);
             this.audioPlayers.set(guildId, newPlayer);
+
             return newPlayer;
 
         }
@@ -46,7 +47,7 @@ module.exports = {
         }
 
         removePlayer(guildId) {
-            this.audioPlayers.delete(guildId);            
+            this.audioPlayers.delete(guildId);    
         }
 
     }

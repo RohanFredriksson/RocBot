@@ -30,7 +30,7 @@ module.exports = {
                 return this.songs[0];
             }
 
-            return this.songs[getRandomInt(0,this.songs.length)];
+            return this.songs[getRandomInt(0,this.songs.length-1)];
 
         }
 

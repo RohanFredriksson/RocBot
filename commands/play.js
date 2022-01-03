@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, channelMention } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { titleCase } = require('./../util.js');
 
 const name = 'play';
