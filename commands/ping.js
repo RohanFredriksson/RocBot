@@ -20,7 +20,9 @@ module.exports = {
 			],
 
 	async execute(interaction, command, args, client, userData, musicPlayer) {
-		await reply(interaction, 'Pong!');
+		interaction.send('Pong 1');
+		interaction.send('Pong 2');
+		interaction.send('Pong 3')
 	}
 
 };

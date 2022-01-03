@@ -29,21 +29,21 @@ module.exports = {
         const id = user.id;
     
         if (args.length < 1) {
-            reply(interaction, 'Not enough arguments!');
+            interaction.send('Not enough arguments!');
             return;
         }
 
         pool = args[0].toLowerCase();
 
         if (!user.hasPool(pool)) {
-            reply(interaction, 'Pool does not exist! Nothing happened.');
+            interaction.send('Pool does not exist! Nothing happened.')
             return;
         }
 
         user.removePool(pool);
         user.save();
 
-        reply(interaction, 'Pool \"' + titleCase(pool) + '\" removed!');
+        interaction.send('Pool \"' + titleCase(pool) + '\" removed!');
 
 	}
 

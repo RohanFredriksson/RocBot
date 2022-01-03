@@ -28,7 +28,7 @@ module.exports = {
             list = list + key + '\n';
         }
 
-        reply(interaction, list);
+        interaction.send(list);
 
 	}
 

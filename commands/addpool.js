@@ -36,14 +36,14 @@ module.exports = {
         pool = args[0].toLowerCase();
 
         if (user.hasPool(pool)) {
-            reply(interaction, 'Pool already exists! Pools can not have the same name.');
+            interaction.send('Pool already exists! Pools can not have the same name.');
             return;
         }
 
         user.addPool(pool);
         user.save();
 
-        //reply(interaction, 'Pool \"' + titleCase(pool) + '\" created!');
+        interaction.send('Pool \"' + titleCase(pool) + '\" created!')
 
 	}
 

@@ -3,6 +3,7 @@ const { Client, Intents, ClientVoiceManager, Collection } = require('discord.js'
 const { token } = require('./config.json');
 const { User } = require('./classes/user.js');
 const { getGuildId } = require('./util.js');
+const { Interaction } = require('./classes/interaction.js');
 
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 client.commands = new Collection();
@@ -68,8 +69,10 @@ function execute(interaction, command, args, user) {
         return;
     }
 
+    interaction = new Interaction(interaction);
+
     if (client.commands.get(command).operatorOnly && !operators.includes(id)) {
-        interaction.reply("You don't have sufficient permission to use this command");
+        interaction.send("You don't have sufficient permission to use this command");
         return;
     }
 

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { reply, titleCase } = require('./../util.js');
+const { reply, titleCase, deferReply } = require('./../util.js');
 
 const name = 'removesong';
 const description = 'Remove songs from existing pools!';
@@ -34,25 +34,31 @@ module.exports = {
         const id = user.id;
 
         if (args.length < 1) {
-            reply(interaction, 'No song pool provided! Please specify a song pool to add a song in.');
+            interaction.send('No song pool provided! Please specify a song pool to add a song in.');
             return;
         }
 
         if (args.length < 2) {
-            reply(interaction, 'No song provided! To add a song please enter some search terms or a YouTube link.');
+            interaction.send('No song provided! To add a song please enter some search terms or a YouTube link.');
             return;
         }
+
+        interaction.defer();
 
         poolName = args.shift().toLowerCase();
         pool = user.getPool(poolName);
 
         if (pool == null) {
-            reply(interaction, 'Pool "' + titleCase(poolName) + '" could not be found.');
+            interaction.send('Pool "' + titleCase(poolName) + '" could not be found.');
             return;
         }
 
         if (await !pool.hasSong(args)) {
-            reply(interaction, 'Song requested is not in pool "' + titleCase(poolName) + '"');
+            interaction.send('Song requested is not in pool "' + titleCase(poolName) + '"');
+            return;
+        }
+
+        if (song === undefined) {
             return;
         }
 
@@ -62,7 +68,7 @@ module.exports = {
         await pool.removeSong(args);
         user.save();
 
-        reply(interaction, 'Song "' + title + '" was successfully removed from pool "' + titleCase(poolName) + '"');
+        interaction.send('Song "' + title + '" was successfully removed from pool "' + titleCase(poolName) + '"');
 
 	}
 

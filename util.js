@@ -20,6 +20,29 @@ module.exports = {
         
     },
 
+    deferReply(interaction) {
+
+        json = interaction.toJSON()
+        if (json['type'] == 'APPLICATION_COMMAND') {
+            interaction.deferReply();
+        }
+
+    },
+
+    followUp(interaction, output) {
+
+        json = interaction.toJSON()
+
+        if (json['type'] == 'DEFAULT') {
+            interaction.channel.send(output);
+        }
+
+        else if (json['type'] == 'APPLICATION_COMMAND') {
+            interaction.followUp(output);
+        }
+        
+    },
+
     getCommandName(interaction) {
 
         if (typeof interaction.content !== "undefined") {
