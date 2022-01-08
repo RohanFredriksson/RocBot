@@ -141,6 +141,10 @@ module.exports = {
             this.songHandler.toggleShuffle();
         }
 
+        setShuffle(shuffle) {
+            this.songHandler.setShuffle(shuffle);
+        }
+
     }
 
 }

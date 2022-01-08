@@ -1,3 +1,4 @@
+const { NoSubscriberBehavior } = require('@discordjs/voice');
 const { Queue } = require('./queue.js');
 
 module.exports = {
@@ -53,14 +54,24 @@ module.exports = {
             this.shuffle = !this.shuffle;
 
             if (this.shuffle) {
+
                 this.interaction.send(`🔀 **|** **Shuffle: On**`);
-                this.pool.setShuffle(true);
+
+                if (this.pool != null) {
+                    this.pool.setShuffle(true);
+                }
+                
                 return;
             }
 
             else {
+
                 this.interaction.send(`🔀 **|** **Shuffle: Off**`);
-                this.pool.setShuffle(false);
+
+                if (this.pool != null) {
+                    this.pool.setShuffle(false);
+                }
+
                 return;
             }
 
@@ -68,11 +79,30 @@ module.exports = {
 
         setPool(pool) {
             this.pool = pool;
+            this.pool.setShuffle(this.shuffle);
         }
 
         setInteraction(interaction) {
             this.interaction = interaction;  
             this.queue.setInteraction(interaction); 
+        }
+
+        setShuffle(shuffle) {
+
+            this.shuffle = shuffle;
+
+            if (this.shuffle) {
+                this.interaction.send(`🔀 **|** **Shuffle: On**`);
+            }
+
+            else {
+                this.interaction.send(`🔀 **|** **Shuffle: Off**`);
+            }
+
+            if (this.pool != null) {
+                this.pool.setShuffle(shuffle);
+            }
+
         }
 
         async addSong(searchTerms) {

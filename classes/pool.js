@@ -129,8 +129,9 @@ module.exports = {
 
             if (this.isShuffled) {
                 this.shuffle();
+                return;
             }
-            
+
         }
     
         static parse(str) {

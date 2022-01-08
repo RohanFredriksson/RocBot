@@ -33,7 +33,7 @@ module.exports = {
                 .addStringOption(option =>
                     option.setName("order")
                     .setDescription("Choose whether the songs should be played in chronological order or randomly picked.")
-                    .addChoice("random", "random")
+                    .addChoice("shuffled", "shuffled")
                     .addChoice("ordered", "ordered")
                 )
             ],
@@ -71,6 +71,13 @@ module.exports = {
 
             poolName = args[0].toLowerCase();
             interaction.send(`🎶 **|** Now playing from pool **${titleCase(poolName)}**`);
+
+            if (args[args.length-1].toLowerCase() == 'ordered') {
+                audioPlayer.setShuffle(false);
+            } else {
+                audioPlayer.setShuffle(true);
+            }
+
             audioPlayer.setPool(user.getPool(poolName));
             return;
 
