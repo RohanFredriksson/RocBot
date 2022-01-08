@@ -21,11 +21,6 @@ module.exports = {
                     option.setName("song")
                     .setDescription("Enter a song to play.")
                     .setRequired(true)
-                )
-                .addStringOption(option =>
-                    option.setName('query')
-                    .setDescription("Enter search terms or a YouTube URL.")
-                    .setRequired(true)
                 ),
                 new SlashCommandBuilder()
 			    .setName('playpool')
