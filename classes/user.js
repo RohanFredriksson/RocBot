@@ -17,7 +17,7 @@ module.exports = {
 
         hasPool(name) {
 
-            for (var i = 0; i < this.pools.length; i++) {
+            for (let i = 0; i < this.pools.length; i++) {
 
                 if (this.pools[i].name == name) {
                     return true;
@@ -30,7 +30,7 @@ module.exports = {
 
         getPool(name) {
             
-            for (var i = 0; i < this.pools.length; i++) {
+            for (let i = 0; i < this.pools.length; i++) {
 
                 if (this.pools[i].name == name) {
                     return this.pools[i];
@@ -54,7 +54,7 @@ module.exports = {
 
         removePool(name) {
             
-            for (var i = 0; i < this.pools.length; i++) {
+            for (let i = 0; i < this.pools.length; i++) {
 
                 if (this.pools[i].name == name) {
                     this.pools.splice(i, 1);
@@ -75,8 +75,8 @@ module.exports = {
 
         static load(id) {
 
-            var userFiles = fs.readdirSync('./data').filter(file => file.endsWith('.json'));
-            for (var file of userFiles) {
+            const userFiles = fs.readdirSync('./data').filter(file => file.endsWith('.json'));
+            for (let file of userFiles) {
                 
                 if (file == id + '.json') {
         
@@ -92,18 +92,18 @@ module.exports = {
                 }
                 
             }
-            var newUser = new User(id);
-            //newUser.save();
+            const newUser = new User(id);
+            newUser.save();
             return newUser;
 
         }
 
         static parse(str) {
 
-            var json = JSON.parse(str);
+            const json = JSON.parse(str);
 
-            var newPools = [];
-            for (var i = 0; i < json.pools.length; i++) {
+            const newPools = [];
+            for (let i = 0; i < json.pools.length; i++) {
                 newPools.push(Pool.parse(JSON.stringify(json.pools[i])));
             }
 

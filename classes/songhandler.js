@@ -17,7 +17,7 @@ module.exports = {
 
         getNext() {
 
-            var song = null;
+            let song = null;
 
             if (this.queue != null) {
                 

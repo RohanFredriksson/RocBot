@@ -62,9 +62,9 @@ module.exports = {
 
         async hasSong(searchTerms) {
 
-            var url = await Song.getUrl(searchTerms);
+            const url = await Song.getUrl(searchTerms);
 
-            for (var i = 0; i < this.songs.length; i++) {
+            for (let i = 0; i < this.songs.length; i++) {
 
                 if (this.songs[i].url == url) {
                     return true;
@@ -78,9 +78,9 @@ module.exports = {
 
         async getSong(searchTerms) {
 
-            var url = await Song.getUrl(searchTerms);
+            const url = await Song.getUrl(searchTerms);
 
-            for (var i = 0; i < this.songs.length; i++) {
+            for (let i = 0; i < this.songs.length; i++) {
 
                 if (this.songs[i].url == url) {
                     return this.songs[i];
@@ -105,9 +105,9 @@ module.exports = {
 
         async removeSong(searchTerms) {
 
-            var url = await Song.getUrl(searchTerms);
+            const url = await Song.getUrl(searchTerms);
 
-            for (var i = 0; i < this.songs.length; i++) {
+            for (let i = 0; i < this.songs.length; i++) {
 
                 if (this.songs[i].url == url) {
                     this.songs.splice(i, 1);
@@ -136,10 +136,10 @@ module.exports = {
     
         static parse(str) {
             
-            var json = JSON.parse(str);
+            const json = JSON.parse(str);
+            const newSongs = [];
 
-            var newSongs = [];
-            for (var i = 0; i < json.songs.length; i++) {
+            for (let i = 0; i < json.songs.length; i++) {
                 newSongs.push(Song.parse(JSON.stringify(json.songs[i])));
             }
 

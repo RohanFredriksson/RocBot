@@ -57,13 +57,18 @@ module.exports = {
             clearInterval(this.emptyChecker);
             this.connection.unsubscribe();
             this.connection.disconnect();
+
+            this.connection = null;
+            this.audioPlayer = null;
+            this.songHandler = null;
+
             this.audioPlayerManager.removePlayer(this.channel.guild.id);
 
         }
 
         play(url) {
-            var stream = ytdl(url, { filter: 'audioonly' })
-            var resource = createAudioResource(stream);
+            const stream = ytdl(url, { filter: 'audioonly' })
+            const resource = createAudioResource(stream);
             this.audioPlayer.play(resource);
         }
 
@@ -77,7 +82,7 @@ module.exports = {
 
         skip() {
 
-            var song = this.songHandler.getNext();
+            const song = this.songHandler.getNext();
             
             if (song == null) {
                 this.disconnect();

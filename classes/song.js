@@ -11,12 +11,12 @@ module.exports = {
         }
 
         static parse(str) {
-            var json = JSON.parse(str);
+            const json = JSON.parse(str);
             return new Song(json.title, json.url);
         }
 
         static async videoFinder(searchTerms) {
-            var videoResult = await ytSearch(searchTerms);
+            const videoResult = await ytSearch(searchTerms);
             return (videoResult.videos.length > 1) ? videoResult.videos[0] : null;
         }
 
@@ -24,12 +24,12 @@ module.exports = {
 
             if (ytdl.validateURL(searchTerms)) {
 
-                var songInfo = await ytdl.getInfo(searchTerms);
+                const songInfo = await ytdl.getInfo(searchTerms);
                 return new Song(songInfo.videoDetails.title, songInfo.videoDetails.video_url);
 
             } else {
 
-                var video = await Song.videoFinder(searchTerms.join(' '));
+                const video = await Song.videoFinder(searchTerms.join(' '));
                 if (video) {
                     return new Song(video.title, video.url);
                 } 
@@ -43,12 +43,12 @@ module.exports = {
             
             if (ytdl.validateURL(searchTerms)) {
 
-                var songInfo = await ytdl.getInfo(searchTerms);
+                const songInfo = await ytdl.getInfo(searchTerms);
                 return songInfo.videoDetails.video_url;
 
             } else {
 
-                var video = await Song.videoFinder(searchTerms.join(' '));
+                const video = await Song.videoFinder(searchTerms.join(' '));
                 if (video) {
                     return video.url
                 } 

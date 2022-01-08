@@ -35,8 +35,8 @@ module.exports = {
 
         async removeSong(searchTerms) {
 
-            var url = await Song.getUrl(searchTerms);
-            for (var i = 0; i < this.songs.length; i++) {
+            const url = await Song.getUrl(searchTerms);
+            for (let i = 0; i < this.songs.length; i++) {
                 
                 if (this.songs[i].url == url) {
                     this.songs.splice(i, 1);

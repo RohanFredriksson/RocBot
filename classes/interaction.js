@@ -9,7 +9,7 @@ module.exports = {
             this.firstMessage = true;
             this.firstReplySent = false;
 
-            var json = interaction.toJSON()
+            const json = interaction.toJSON()
 
             if (json['type'] == 'APPLICATION_COMMAND') {
                 this.isInteraction = true;

@@ -27,7 +27,7 @@ module.exports = {
                 return null;
             }
 
-            var newPlayer = new AudioPlayer(channel, interaction, this);
+            const newPlayer = new AudioPlayer(channel, interaction, this);
             this.audioPlayers.set(guildId, newPlayer);
 
             return newPlayer;
