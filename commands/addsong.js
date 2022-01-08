@@ -66,7 +66,13 @@ module.exports = {
 
         song = await pool.getSong(args)
         
-        if (song === undefined) {
+        if (song == null) {
+            interaction.send(`🚫 **|** Something went wrong. Song could not be found.`);
+            return;
+        }
+
+        if (typeof song === "undefined") {
+            interaction.send(`🚫 **|** Something went wrong. Song could not be found.`);
             return;
         }
 

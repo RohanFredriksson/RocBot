@@ -86,8 +86,8 @@ module.exports = {
             if (!this.isInteraction) {
                 return this.interaction.member.guild.id;
             }
-    
-            return interaction.guildId;
+            
+            return this.interaction.guildId;
     
         }
 

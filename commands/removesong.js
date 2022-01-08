@@ -59,11 +59,18 @@ module.exports = {
         }
 
         song = await pool.getSong(args)
-        title = song.title;
-
-        if (song === undefined) {
+        
+        if (song == null) {
+            interaction.send(`🚫 **|** Something went wrong. Song could not be found.`);
             return;
         }
+
+        if (typeof song === "undefined") {
+            interaction.send(`🚫 **|** Something went wrong. Song could not be found.`);
+            return;
+        }
+
+        title = song.title;
 
         await pool.removeSong(args);
         user.save();

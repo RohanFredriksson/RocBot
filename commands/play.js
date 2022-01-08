@@ -57,7 +57,6 @@ module.exports = {
             return;
         }   
 
-        interaction.defer();
         guildId = interaction.getGuildId();
 
         // Create a new audio player if one doesn't exist.
@@ -76,9 +75,8 @@ module.exports = {
         if (user.hasPool(args[0].toLowerCase())) {
 
             poolName = args[0].toLowerCase();
-            audioPlayer.setPool(user.getPool(poolName));
-            
             interaction.send(`🎶 **|** Now playing from pool **${titleCase(poolName)}**`);
+            audioPlayer.setPool(user.getPool(poolName));
             return;
 
         }

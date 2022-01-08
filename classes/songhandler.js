@@ -30,13 +30,7 @@ module.exports = {
 
             if (this.pool != null) {
 
-                if (this.shuffle) {
-                    song = this.pool.getRandomSong();
-                }
-
-                else {
-                    song = this.pool.getNext();
-                }
+                song = this.pool.getNext();
 
                 if (song != null) {
                     return song;
@@ -51,15 +45,22 @@ module.exports = {
 
         toggleShuffle() {
 
+            if (this.pool == null) {
+                this.interaction.send(`🚫 **|** You must be playing from a pool to toggle the shuffle!`);
+                return;
+            }
+
             this.shuffle = !this.shuffle;
 
             if (this.shuffle) {
                 this.interaction.send(`🔀 **|** **Shuffle: On**`);
+                this.pool.setShuffle(true);
                 return;
             }
 
             else {
                 this.interaction.send(`🔀 **|** **Shuffle: Off**`);
+                this.pool.setShuffle(false);
                 return;
             }
 

@@ -1,5 +1,5 @@
 const { Song } = require('./song');
-const { getRandomInt } = require('./../util.js');
+const { shuffle } = require('./../util.js');
 
 module.exports = {
 
@@ -12,9 +12,15 @@ module.exports = {
             }
             
             this.name = name;
+            this.isShuffled = true;
+
             this.songs = songs;
+            this.songsShuffled = [...songs];
+
             this.head = 0;
-            this.lastSong = null;
+            this.shuffleHead = 0;
+
+            this.shuffle();
 
         }
 
@@ -24,6 +30,10 @@ module.exports = {
 
         getNext() {
 
+            if (this.isShuffled) {
+                return this.getRandomSong();
+            }
+
             if (this.songs.length == 0) {
                 return null;
             }
@@ -32,33 +42,21 @@ module.exports = {
                 this.head = 0;
             }
 
-            var song = this.songs[this.head];
-            this.head = this.head + 1;
-            return song;
+            return this.songs[this.head++];
 
         }
 
         getRandomSong() {
 
-            if (this.songs.length == 0) {
-                this.lastSong = null;
+            if (this.songsShuffled.length == 0) {
                 return null;
             }
 
-            if (this.songs.length == 1) {
-                this.lastSong = this.songs[0];
-                return this.songs[0];
+            if (this.shuffleHead >= this.songsShuffled.length) {
+                this.shuffleHead = 0;
             }
 
-            var song = this.songs[getRandomInt(0,this.songs.length-1)];
-
-            if (!this.lastSong == null) {
-                while (song.url == this.lastSong.url) {
-                    song = this.songs[getRandomInt(0,this.songs.length-1)];
-                }
-            }
-            
-            return song;
+            return this.songsShuffled[this.shuffleHead++];
 
         }
 
@@ -101,6 +99,7 @@ module.exports = {
             }
 
             this.songs.push(await Song.getSong(searchTerms));
+            this.shuffle();
 
         }
 
@@ -112,11 +111,26 @@ module.exports = {
 
                 if (this.songs[i].url == url) {
                     this.songs.splice(i, 1);
+                    this.shuffle();
                     return;
                 }
 
             }
 
+        }
+
+        shuffle() {
+            shuffle(this.songsShuffled);
+        }
+
+        setShuffle(isShuffled) {
+
+            this.isShuffled = isShuffled;
+
+            if (this.isShuffled) {
+                this.shuffle();
+            }
+            
         }
     
         static parse(str) {

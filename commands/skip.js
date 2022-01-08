@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const name = 'skip';
 const description = 'Skip the current song that is playing.';
-const aliases = [];
+const aliases = ['fs','next'];
 const operatorOnly = false;
 
 module.exports = {

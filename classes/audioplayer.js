@@ -113,7 +113,10 @@ module.exports = {
 
             this.connection.unsubscribe();
             this.connection.disconnect();
+            this.connection = null;
+            
             this.connection = new Connection(channel);
+            this.connection.join();
             this.connection.subscribe(this.audioPlayer);
 
         }
