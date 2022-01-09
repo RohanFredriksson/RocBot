@@ -23,6 +23,17 @@ module.exports = {
             this.songs = [];
         }
 
+        isEmpty() {
+            if (this.songs.length == 0) {
+                return true;
+            }
+            return false;
+        }
+
+        getSongList() {
+            return this.songs;
+        }
+
         setInteraction(interaction) {
             this.interaction = interaction;
         }

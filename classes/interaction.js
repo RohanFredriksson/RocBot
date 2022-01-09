@@ -91,6 +91,14 @@ module.exports = {
     
         }
 
+        getGuild() {
+            return this.interaction.guild;
+        }
+
+        getGuildName() {
+            return this.interaction.guild.name;
+        }
+
         getVoiceChannel() {
             return this.interaction.member.voice.channel;
         }

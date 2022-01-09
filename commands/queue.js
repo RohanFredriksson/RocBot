@@ -1,10 +1,12 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
+const { titleCase } = require('./../util.js');
 
 const name = 'queue';
 const description = 'Displays the queue.';
 const aliases = ['q'];
 const operatorOnly = false;
+const maxSongs = 10;
 
 module.exports = {
 
@@ -45,23 +47,54 @@ module.exports = {
 
         const embed = new MessageEmbed()
             .setColor('FFA500')
-            .setTitle(`Queue`);
+            .setTitle(`${interaction.getGuildName()}`);
+    
+        queue = audioPlayer.songHandler.queue;
+        pool = audioPlayer.songHandler.pool;
 
-        songs = audioPlayer.songHandler.queue.songs;
+        j = 0;
 
-        if (songs.length == 0) {
-            embed.setDescription('Hmm, this seems to be empty.');
+        if (queue.isEmpty()) {
+
+            if (pool == null || pool.isEmpty()) {
+                embed.setDescription('Hmm, this seems to be empty.');
+            }
+
         }
 
         else {
 
-            list = '';
-            for (i = 0; i < songs.length; i++) {
-                song = songs[i];
-                list = list + `${i+1}. **${song.title}**\n`;
+            queueName = `Queue:`
+            queueSongs = queue.getSongList();
+
+            queueValue = '';
+            for (i = 0; i < queueSongs.length && j < maxSongs; i++) {
+                queueSong = queueSongs[i];
+                queueValue = queueValue + `**${j+1}.** ${queueSong.title}\n`;
+                j++;
             }
 
-            embed.setDescription(list);
+            embed.addField(queueName, queueValue, false);
+
+        }
+
+        if (pool != null) {
+
+            if (!pool.isEmpty() && j < maxSongs) {
+
+                poolName = `Current Pool: ${titleCase(pool.name)}`;
+                poolSongs = pool.getSongList();
+
+                poolValue = '';
+                for (i = 0; i < poolSongs.length && j < maxSongs; i++) {
+                    poolSong = poolSongs[i];
+                    poolValue = poolValue + `**${j+1}.**  ${poolSong.title}\n`;
+                    j++;
+                }
+
+                embed.addField(poolName, poolValue, false);
+
+            }
 
         }
 

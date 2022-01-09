@@ -46,6 +46,34 @@ module.exports = {
 
         }
 
+        getSongList() {
+
+            let list;
+            let pointer;
+
+            if (this.isShuffled) {
+                list = [...this.songsShuffled];
+                pointer = this.shuffleHead;
+            } else {
+                list = [...this.songs];
+                pointer = this.head;
+            }
+
+            for (let i = pointer; i > 0; i--) {
+                list.push(list.shift());
+            }
+
+            return list;
+
+        }
+
+        isEmpty() {
+            if (this.songs.length == 0) {
+                return true;
+            }
+            return false;
+        }
+
         getRandomSong() {
 
             if (this.songsShuffled.length == 0) {
