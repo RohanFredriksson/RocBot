@@ -12,10 +12,20 @@ module.exports = {
             this.pool = null;
             this.queue = new Queue(interaction);
             this.shuffle = true;
+            this.repeat = false;
+            this.currentSong = null;
 
         }
 
+        getCurrentSong() {
+            return this.currentSong;
+        }
+
         getNext() {
+
+            if (this.repeat) {
+                return this.currentSong;
+            }
 
             let song = null;
 
@@ -24,6 +34,7 @@ module.exports = {
                 song = this.queue.getNext();
 
                 if (song != null) {
+                    this.currentSong = song;
                     return song;
                 }
 
@@ -34,13 +45,28 @@ module.exports = {
                 song = this.pool.getNext();
 
                 if (song != null) {
+                    this.currentSong = song;
                     return song;
                 }
 
             }
 
-            this.queue = new Queue();
-            return song;
+            this.currentSong = null;
+            return null;
+
+        }
+
+        toggleRepeat() {
+
+            this.repeat = !this.repeat;
+
+            if (this.repeat) {
+                this.interaction.send(`🔁 **|** **Repeat: On**`);
+            }
+
+            else {
+                this.interaction.send(`🔁 **|** **Repeat: Off**`);
+            }
 
         }
 

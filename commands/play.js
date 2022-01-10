@@ -83,6 +83,11 @@ module.exports = {
 
         }
 
+        if (command == 'playpool') {
+            interaction.send(`🚫 **|** Could not find specified pool.`);
+            return;
+        }
+
         await audioPlayer.addSong(args);
 
 	}

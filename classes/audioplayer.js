@@ -147,8 +147,16 @@ module.exports = {
             this.songHandler.toggleShuffle();
         }
 
+        toggleRepeat() {
+            this.songHandler.toggleRepeat();
+        }
+
         setShuffle(shuffle) {
             this.songHandler.setShuffle(shuffle);
+        }
+
+        getCurrentSong() {
+            return this.songHandler.getCurrentSong();
         }
 
     }
