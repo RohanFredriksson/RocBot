@@ -66,8 +66,9 @@ module.exports = {
 
         }
 
-        play(url) {
-            const stream = ytdl(url, { filter: 'audioonly' })
+        async play(song) {
+            //const stream = ytdl(song.url, { filter: 'audioonly' })
+            const stream = await song.getStream();
             const resource = createAudioResource(stream);
             this.audioPlayer.play(resource);
         }
@@ -90,7 +91,7 @@ module.exports = {
             }
 
             this.unpause();
-            this.play(song.url);
+            this.play(song);
             this.interaction.send(`🎵 **|** Now playing: **${song.title}**`);
 
         }

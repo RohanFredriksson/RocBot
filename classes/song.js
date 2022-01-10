@@ -1,5 +1,6 @@
 const ytdl = require('ytdl-core');
 const ytSearch = require('yt-search');
+const { PassThrough } = require('stream');
 
 module.exports = {
 
@@ -55,6 +56,62 @@ module.exports = {
                 return null;
 
             }
+
+        }
+
+        async getStream() {
+
+            const stream = new PassThrough();
+
+            const info = await ytdl.getInfo(this.url);
+            const format = ytdl.chooseFormat(info.formats, {
+                filter: "audioonly",
+                quality: "highestaudio"
+            });
+            const options = { lang: "en" };
+            const chunkSize = 512 * 1024;
+            
+            let current = -1;
+            const contentLength = Number(format.contentLength);
+
+            if (contentLength < chunkSize) {
+                ytdl.downloadFromInfo(info, {format, ...options})
+                .on("error", er => stream.emit("error", er))
+                .pipe(stream);
+            }
+
+            else {
+
+                const pipeNextStream = () => {
+                    
+                    current++;
+                    let end = chunkSize * (current + 1) - 1;
+                    
+                    if (end >= contentLength) {
+                        end = undefined;
+                    }
+
+                    const nextStream = ytdl.downloadFromInfo(info, {format, ...options, range: {
+                        start: chunkSize * current, end
+                    }});
+
+                    nextStream
+                    .on("error", er => stream.emit("error", er))
+                    .pipe(stream, {end: end === undefined});
+
+                    if (end !== undefined) {
+                        nextStream.on("end", () => {
+                            pipeNextStream();
+                        });
+                    }
+
+                };
+
+                pipeNextStream();
+
+            }
+
+            return stream;
 
         }
 
