@@ -55,7 +55,7 @@ module.exports = {
             list = '';
             for (i = 0; i < songs.length; i++) {
                 song = songs[i];
-                list = list + `${i+1}. **${song.title}**\n`;
+                list = list + `**${i+1}.** [${song.title}](${song.url})\n`;
             }
 
             embed.setDescription(list);

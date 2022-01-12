@@ -70,7 +70,7 @@ module.exports = {
             queueValue = '';
             for (i = 0; i < queueSongs.length && j < maxSongs; i++) {
                 queueSong = queueSongs[i];
-                queueValue = queueValue + `**${j+1}.** ${queueSong.title}\n`;
+                queueValue = queueValue + `**${j+1}.** [${queueSong.title}](${queueSong.url})\n`;
                 j++;
             }
 
@@ -88,7 +88,7 @@ module.exports = {
                 poolValue = '';
                 for (i = 0; i < poolSongs.length && j < maxSongs; i++) {
                     poolSong = poolSongs[i];
-                    poolValue = poolValue + `**${j+1}.**  ${poolSong.title}\n`;
+                    poolValue = poolValue + `**${j+1}.** [${poolSong.title}](${poolSong.url})\n`;
                     j++;
                 }
 
