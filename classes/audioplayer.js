@@ -49,6 +49,7 @@ module.exports = {
             }, 5000);
 
             this.isPlaying = false;
+            this.isMuted = false;
 
         }
 
@@ -92,8 +93,10 @@ module.exports = {
 
             this.unpause();
             this.play(song);
-            this.interaction.send(`🎵 **|** Now playing: **${song.title}**`);
-
+            if (!this.isMuted) {
+                this.interaction.send(`🎵 **|** Now playing: **${song.title}**`);
+            }
+            
         }
 
         setPool(pool) {
@@ -157,6 +160,16 @@ module.exports = {
 
         getCurrentSong() {
             return this.songHandler.getCurrentSong();
+        }
+
+        mute() {
+            this.isMuted = true;
+            this.interaction.send(`🔇 **|** **Muted Notifications**`);
+        }
+
+        unmute() {
+            this.isMuted = false;
+            this.interaction.send(`🔊 **|** **Unmuted Notifications**`);
         }
 
     }
