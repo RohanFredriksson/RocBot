@@ -1,3 +1,4 @@
+const ytpl = require('ytpl');
 const { Song } = require('./song');
 const { shuffle } = require('./../util.js');
 
@@ -172,6 +173,20 @@ module.exports = {
             }
 
             return new Pool(json.name, newSongs);
+
+        }
+
+        static async createPoolFromURL(url) {
+
+            const playlist = await ytpl(url);
+            const newPool = new Pool(playlist.title);
+
+            for (let i = 0; i < playlist.items.length; i++) {
+                let song = playlist.items[i];
+                newPool.songs.push(new Song(song.title, song.shortUrl));
+            }
+
+            return newPool;
 
         }
     

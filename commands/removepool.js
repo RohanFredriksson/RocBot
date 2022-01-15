@@ -33,17 +33,16 @@ module.exports = {
             return;
         }
 
-        pool = args[0].toLowerCase();
-
-        if (!user.hasPool(pool)) {
+        poolName = args.join(' ');
+        if (!user.hasPool(poolName)) {
             interaction.send('🚫 **|** Pool does not exist! Nothing happened')
             return;
         }
 
-        user.removePool(pool);
+        user.removePool(poolName);
         user.save();
 
-        interaction.send(`🗑️ **|** Pool **${titleCase(pool)}** was successfully removed!`);
+        interaction.send(`🗑️ **|** Pool **${titleCase(poolName)}** was successfully removed!`);
 
 	}
 

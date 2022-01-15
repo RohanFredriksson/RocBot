@@ -15,17 +15,38 @@ module.exports = {
             this.pools = pools;
         }
 
-        hasPool(name) {
+        hasPool(pool) {
 
-            for (let i = 0; i < this.pools.length; i++) {
+            if (typeof pool === "string") {
 
-                if (this.pools[i].name == name) {
-                    return true;
+                for (let i = 0; i < this.pools.length; i++) {
+
+                    if (this.pools[i].name == pool) {
+                        return true;
+                    }
+    
                 }
+    
+                return false;
+
+            } 
+            
+            else if (pool instanceof Pool) {
+
+                for (let i = 0; i < this.pools.length; i++) {
+
+                    if (this.pools[i].name == pool.name) {
+                        return true;
+                    }
+    
+                }
+
+                return false;
 
             }
 
             return false;
+
         }
 
         getPool(name) {
@@ -42,13 +63,27 @@ module.exports = {
 
         }
 
-        addPool(name) {
+        addPool(pool) {
 
-            if (this.hasPool(name)) {
-                return;
+            if (typeof pool === "string") {
+
+                if (this.hasPool(pool)) {
+                    return;
+                }
+    
+                this.pools.push(new Pool(pool));
+
             }
 
-            this.pools.push(new Pool(name));
+            else if (pool instanceof Pool) {
+
+                if (this.hasPool(pool.name)) {
+                    return;
+                }
+
+                this.pools.push(pool);
+
+            }
 
         }
 

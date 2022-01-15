@@ -1,4 +1,6 @@
+const ytpl = require('ytpl');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { Pool } = require('../classes/pool.js');
 const { titleCase } = require('../util.js');
 
 const name = 'addpool';
@@ -19,7 +21,7 @@ module.exports = {
                 .setDescription(description)
                 .addStringOption(option =>
                     option.setName("pool")
-                    .setDescription("Enter a pool name for the new pool.")
+                    .setDescription("Enter a pool name for the new pool, or a YouTube playlist url.")
                     .setRequired(true)
                 )
             ],
@@ -33,17 +35,40 @@ module.exports = {
             return;
         }
 
-        pool = args[0].toLowerCase();
+        // If the user entered a playlist.
+        if (await ytpl.validateID(args[0])) {
+            
+            newPool = await Pool.createPoolFromURL(args[0]);
+            
+            if (user.hasPool(newPool)) {
+                interaction.send('🚫 **|** Song pool already exists! Song pools can not have the same name');
+                return;
+            }
 
-        if (user.hasPool(pool)) {
-            interaction.send('🚫 **|** Song pool already exists! Song pools can not have the same name');
+            user.addPool(newPool);
+            user.save();
+            interaction.send(`✅ **|** Pool **${titleCase(newPool.name)}** created!`);
+
             return;
+
         }
 
-        user.addPool(pool);
-        user.save();
+        // User wishes to create a new pool.
+        else {
 
-        interaction.send(`✅ **|** Pool **${titleCase(pool)}** created!`)
+            pool = args.join(' ').toLowerCase();
+
+            if (user.hasPool(pool)) {
+                interaction.send('🚫 **|** Song pool already exists! Song pools can not have the same name');
+                return;
+            }
+
+            user.addPool(pool);
+            user.save();
+
+            interaction.send(`✅ **|** Pool **${titleCase(pool)}** created!`);
+
+        }
 
 	}
 

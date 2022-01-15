@@ -32,8 +32,7 @@ module.exports = {
             return;
         }
 
-        poolName = args[0].toLowerCase();
-        pool = user.getPool(poolName);
+        pool = user.getPool(args.join(' '));
 
         if (pool == null) {
             interaction.send('🚫 **|** Pool does not exist!')

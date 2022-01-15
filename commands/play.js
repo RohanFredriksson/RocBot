@@ -76,9 +76,13 @@ module.exports = {
         audioPlayer = audioPlayerManager.getPlayer(guildId);
 
         // Check if the user entered a pool name, set the pool.
-        if (user.hasPool(args[0].toLowerCase()) && command != 'playsong') {
+        if (user.hasPool(args.join(' ').toLowerCase()) || user.hasPool(args.slice(0,-1).join(' ').toLowerCase()) && command != 'playsong') {
 
-            poolName = args[0].toLowerCase();
+            poolName = args.join(' ').toLowerCase();
+            if (args[args.length-1] == 'ordered') {
+                poolName = args.slice(0,-1).join(' ').toLowerCase();
+            } 
+
             interaction.send(`🎶 **|** Now playing from pool **${titleCase(poolName)}**`);
 
             if (args[args.length-1].toLowerCase() == 'ordered') {
@@ -93,6 +97,7 @@ module.exports = {
         }
 
         if (command == 'playpool') {
+            console.log(args[0]);
             interaction.send(`🚫 **|** Could not find specified pool.`);
             return;
         }
