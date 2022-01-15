@@ -135,6 +135,10 @@ module.exports = {
             await this.queue.addSong(searchTerms);
         }
 
+        async queuePlaylist(url) {
+            await this.queue.queuePlaylist(url);
+        }
+
     }
 
 }

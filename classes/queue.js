@@ -1,3 +1,4 @@
+const ytpl = require('ytpl');
 const { Song } = require('./song');
 
 module.exports = {
@@ -39,7 +40,7 @@ module.exports = {
         }
 
         async addSong(searchTerms) {
-            var song = await Song.getSong(searchTerms);
+            const song = await Song.getSong(searchTerms);
             this.songs.push(song);
             this.interaction.send(`✅ **|** **${song.title}** added to the queue.`);
         }
@@ -55,6 +56,18 @@ module.exports = {
                 }
 
             }
+
+        }
+
+        async queuePlaylist(url) {
+
+            const playlist = await ytpl(url);
+            for (let i = 0; i < playlist.items.length; i++) {
+                let song = playlist.items[i];
+                this.songs.push(new Song(song.title, song.shortUrl));
+            }
+
+            this.interaction.send(`✅ **|** Playlist **${playlist.title}** added to the queue.`);
 
         }
 

@@ -1,9 +1,10 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { titleCase } = require('./../util.js');
+const ytpl = require('ytpl');
 
 const name = 'play';
 const description = 'Play songs and queue song pools!';
-const aliases = ['p','playsong','playpool'];
+const aliases = ['p','playsong','playpool','playlist'];
 const operatorOnly = false;
 
 module.exports = {
@@ -35,7 +36,15 @@ module.exports = {
                     .setDescription("Choose whether the songs should be played in chronological order or randomly picked.")
                     .addChoice("shuffled", "shuffled")
                     .addChoice("ordered", "ordered")
-                )
+                ),
+                new SlashCommandBuilder()
+			    .setName('playlist')
+			    .setDescription('Play a YouTube playlist.')
+                .addStringOption(option =>
+                    option.setName("url")
+                    .setDescription("Enter a YouTube playlist url.")
+                    .setRequired(true)
+                ),
             ],
 
 	async execute(interaction, command, args, client, user, audioPlayerManager) {
@@ -67,7 +76,7 @@ module.exports = {
         audioPlayer = audioPlayerManager.getPlayer(guildId);
 
         // Check if the user entered a pool name, set the pool.
-        if (user.hasPool(args[0].toLowerCase())) {
+        if (user.hasPool(args[0].toLowerCase()) && command != 'playsong') {
 
             poolName = args[0].toLowerCase();
             interaction.send(`🎶 **|** Now playing from pool **${titleCase(poolName)}**`);
@@ -85,6 +94,12 @@ module.exports = {
 
         if (command == 'playpool') {
             interaction.send(`🚫 **|** Could not find specified pool.`);
+            return;
+        }
+
+        // If the user entered a playlist.
+        if (await ytpl.validateID(args[0])) {
+            await audioPlayer.queuePlaylist(args[0]);
             return;
         }
 

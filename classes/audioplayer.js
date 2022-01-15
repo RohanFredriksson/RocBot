@@ -172,6 +172,17 @@ module.exports = {
             this.interaction.send(`🔊 **|** **Unmuted Notifications**`);
         }
 
+        async queuePlaylist(url) {
+            
+            await this.songHandler.queuePlaylist(url);
+
+            if(!this.isPlaying) {
+                this.isPlaying = true;
+                this.skip();
+            }
+
+        }
+
     }
 
 }
