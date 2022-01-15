@@ -41,7 +41,13 @@ module.exports = {
         }
 
         audioPlayer = audioPlayerManager.getPlayer(guildId);
-        interaction.send('👋 **|** Bye!');
+    
+        if (command == 'fuckoff') {
+            interaction.send('🖕 **|** **Fuck you**');
+        } else {
+            interaction.send('👋 **|** **Bye!**');
+        }
+        
         audioPlayer.disconnect();
 
 	}
