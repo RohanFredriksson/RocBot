@@ -154,6 +154,10 @@ module.exports = {
             this.songHandler.toggleRepeat();
         }
 
+        setRepeat(repeat) {
+            this.songHandler.setRepeat(repeat);
+        }
+
         setShuffle(shuffle) {
             this.songHandler.setShuffle(shuffle);
         }
@@ -181,6 +185,10 @@ module.exports = {
                 this.skip();
             }
 
+        }
+
+        clearQueue() {
+            this.songHandler.clearQueue();
         }
 
     }

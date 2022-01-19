@@ -70,6 +70,20 @@ module.exports = {
 
         }
 
+        setRepeat(repeat) {
+
+            this.repeat = repeat;
+
+            if (this.repeat) {
+                this.interaction.send(`🔁 **|** **Repeat: On**`);
+            }
+
+            else {
+                this.interaction.send(`🔁 **|** **Repeat: Off**`);
+            }
+
+        }
+
         toggleShuffle() {
 
             if (this.pool == null) {
@@ -137,6 +151,11 @@ module.exports = {
 
         async queuePlaylist(url) {
             await this.queue.queuePlaylist(url);
+        }
+
+        clearQueue() {
+            this.queue = new Queue(this.interaction);
+            this.interaction.send(`🗑️ **|** **Queue Cleared!**`);
         }
 
     }
