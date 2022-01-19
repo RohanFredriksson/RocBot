@@ -45,7 +45,7 @@ module.exports = {
 
         interaction.defer();
 
-        poolName = args.shift().toLowerCase();
+        poolName = args.shift();
         pool = user.getPool(poolName);
 
         if (pool == null) {

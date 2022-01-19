@@ -75,17 +75,24 @@ module.exports = {
 
         audioPlayer = audioPlayerManager.getPlayer(guildId);
 
+        orderedAliases = ['ordered', 'order'];
+        shuffleAliases = ['shuffled', 'random', 'shuffle'];
+
+        ordered = false;
+        if (orderedAliases.includes(args[args.length-1])) {
+            args.pop();
+            ordered = true;
+        } else if (shuffleAliases.includes(args[args.length-1])) {
+            args.pop();
+        }
+
         // Check if the user entered a pool name, set the pool.
-        if (user.hasPool(args.join(' ').toLowerCase()) || user.hasPool(args.slice(0,-1).join(' ').toLowerCase()) && command != 'playsong') {
+        if (user.hasPool(args.join(' ')) && command != 'playsong') {
 
-            poolName = args.join(' ').toLowerCase();
-            if (args[args.length-1] == 'ordered') {
-                poolName = args.slice(0,-1).join(' ').toLowerCase();
-            } 
-
+            poolName = args.join(' ');
             interaction.send(`🎶 **|** Now playing from pool **${titleCase(poolName)}**`);
 
-            if (args[args.length-1].toLowerCase() == 'ordered') {
+            if (ordered) {
                 audioPlayer.setShuffle(false);
             } else {
                 audioPlayer.setShuffle(true);

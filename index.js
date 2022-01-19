@@ -42,7 +42,9 @@ client.on('interactionCreate', async interaction => {
 
     if (typeof interaction.options !== 'undefined') {
         interaction.options._hoistedOptions.forEach(option => {
-            args.push('' + option.value);
+            option.value.split(/\s+/).forEach(arg => {
+                args.push('' + arg.toLowerCase());
+            });
         });
     }
 
@@ -55,6 +57,11 @@ client.on('messageCreate', (message) => {
     if(!message.content.startsWith(prefix) || message.author.bot) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
+
+    for (let i = 0; i < args.length; i++) {
+        args[i] = args[i].toLowerCase();
+    }
+
     const command = args.shift().toLowerCase();
     const user = User.load(message.author.id);
 
@@ -65,6 +72,8 @@ client.on('messageCreate', (message) => {
 client.login(token);
 
 function execute(interaction, command, args, user) {
+
+    console.log(args);
 
     if (typeof client.commands.get(command) === 'undefined') {
         return;

@@ -56,7 +56,7 @@ module.exports = {
         // User wishes to create a new pool.
         else {
 
-            pool = args.join(' ').toLowerCase();
+            pool = args.join(' ');
 
             if (user.hasPool(pool)) {
                 interaction.send('🚫 **|** Song pool already exists! Song pools can not have the same name');
