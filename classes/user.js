@@ -50,11 +50,51 @@ module.exports = {
         }
 
         getPool(name) {
+
+            if (name == null) {
+                return null;
+            }
             
             for (let i = 0; i < this.pools.length; i++) {
 
                 if (this.pools[i].name == name) {
                     return this.pools[i];
+                }
+
+            }
+
+            return null;
+
+        }
+
+        getPoolNames() {
+
+            const names = [];
+
+            for (let i = 0; i < this.pools.length; i++) {
+                names.push(this.pools[i].name);
+            }
+
+            return names;
+
+        }
+
+        getPoolNameFromArgs(args) {
+
+            const names = this.getPoolNames();
+            const n = args.length;
+            let currentName = '';
+            
+            for (let i = 0; i < n; i++) {
+                
+                if (i > 0) {
+                    currentName = currentName + ' ';
+                }
+
+                currentName = currentName + args.shift();
+
+                if (names.includes(currentName)) {
+                    return currentName;
                 }
 
             }

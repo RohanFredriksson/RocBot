@@ -45,11 +45,11 @@ module.exports = {
 
         interaction.defer();
 
-        poolName = args.shift();
+        poolName = user.getPoolNameFromArgs(args);
         pool = user.getPool(poolName);
 
-        if (pool == null) {
-            interaction.send(`🚫 **|** Pool **${titleCase(poolName)}** could not be found`);
+        if (pool == null || poolName == null) {
+            interaction.send(`🚫 **|** Pool could not be found`);
             return;
         }
 

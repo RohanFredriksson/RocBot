@@ -45,13 +45,14 @@ module.exports = {
 
         interaction.defer();
 
-        poolName = args.shift();
-        pool = user.getPool(poolName);
-
-        if (pool == null) {
-            interaction.send(`🚫 **|** Pool "${titleCase(poolName)}" could not be found`);
+        poolName = user.getPoolNameFromArgs(args);
+        
+        if (poolName == null) {
+            interaction.send(`🚫 **|** Pool could not be found`);
             return;
         }
+
+        pool = user.getPool(poolName);
 
         if (await pool.hasSong(args)) {
 

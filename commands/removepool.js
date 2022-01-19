@@ -33,8 +33,8 @@ module.exports = {
             return;
         }
 
-        poolName = args.join(' ');
-        if (!user.hasPool(poolName)) {
+        poolName = user.getPoolNameFromArgs(args);
+        if (poolName == null) {
             interaction.send('🚫 **|** Pool does not exist! Nothing happened')
             return;
         }

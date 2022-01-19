@@ -31,8 +31,8 @@ module.exports = {
             interaction.send('🚫 **|** Not enough arguments! Please enter a song pool name')
             return;
         }
-
-        pool = user.getPool(args.join(' '));
+        
+        pool = user.getPool(user.getPoolNameFromArgs(args));
 
         if (pool == null) {
             interaction.send('🚫 **|** Pool does not exist!')

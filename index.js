@@ -73,8 +73,6 @@ client.login(token);
 
 function execute(interaction, command, args, user) {
 
-    console.log(args);
-
     if (typeof client.commands.get(command) === 'undefined') {
         return;
     }
