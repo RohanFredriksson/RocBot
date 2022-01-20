@@ -61,6 +61,7 @@ module.exports = {
         if (audioPlayer.isPlaying) {
             audioPlayer.clearQueue();
             await audioPlayer.addSong(url);
+            audioPlayer.setRepeat(false);
             audioPlayer.skip();
             audioPlayer.setRepeat(true);
         }
