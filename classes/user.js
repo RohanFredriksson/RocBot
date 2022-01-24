@@ -81,8 +81,9 @@ module.exports = {
 
         getPoolNameFromArgs(args) {
 
+            const tmp = [...args];
             const names = this.getPoolNames();
-            const n = args.length;
+            const n = tmp.length;
             let currentName = '';
             
             for (let i = 0; i < n; i++) {
@@ -91,7 +92,7 @@ module.exports = {
                     currentName = currentName + ' ';
                 }
 
-                currentName = currentName + args.shift();
+                currentName = currentName + tmp.shift().toLowerCase();
 
                 if (names.includes(currentName)) {
                     return currentName;

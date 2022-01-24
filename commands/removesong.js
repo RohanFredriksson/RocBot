@@ -53,7 +53,11 @@ module.exports = {
             return;
         }
 
-        if (!pool.hasSong(args)) {
+        for (i = 0; i < poolName.split(/\s+/).length; i++) {
+            args.shift();
+        }
+
+        if (!(await pool.hasSong(args))) {
             interaction.send(`🚫 **|** Song requested is not in pool **${titleCase(poolName)}**`);
             return;
         }

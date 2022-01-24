@@ -53,6 +53,9 @@ module.exports = {
         }
 
         pool = user.getPool(poolName);
+        for (i = 0; i < poolName.split(/\s+/).length; i++) {
+            args.shift();
+        }
 
         if (await pool.hasSong(args)) {
 
