@@ -104,7 +104,6 @@ module.exports = {
         }
 
         if (command == 'playpool') {
-            console.log(args[0]);
             interaction.send(`🚫 **|** Could not find specified pool.`);
             return;
         }

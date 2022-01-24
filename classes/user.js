@@ -21,7 +21,7 @@ module.exports = {
 
                 for (let i = 0; i < this.pools.length; i++) {
 
-                    if (this.pools[i].name == pool) {
+                    if (this.pools[i].name.toLowerCase() == pool.toLowerCase()) {
                         return true;
                     }
     
@@ -35,7 +35,7 @@ module.exports = {
 
                 for (let i = 0; i < this.pools.length; i++) {
 
-                    if (this.pools[i].name == pool.name) {
+                    if (this.pools[i].name.toLowerCase() == pool.name.toLowerCase()) {
                         return true;
                     }
     
@@ -57,7 +57,7 @@ module.exports = {
             
             for (let i = 0; i < this.pools.length; i++) {
 
-                if (this.pools[i].name == name) {
+                if (this.pools[i].name.toLowerCase() == name.toLowerCase()) {
                     return this.pools[i];
                 }
 
