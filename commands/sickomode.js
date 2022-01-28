@@ -28,7 +28,7 @@ module.exports = {
                 return;
             }
 
-            if (args[0] != 'mode') {
+            if (args[0].toLowerCase() != 'mode') {
                 return
             }
 

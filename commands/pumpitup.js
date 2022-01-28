@@ -1,10 +1,10 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { titleCase } = require('./../util.js');
+const { titleCase } = require('../util.js');
 const ytpl = require('ytpl');
 
-const name = 'ancientstones';
-const description = 'Stops whatever you are playing and plays Ancient Stones on repeat!';
-const aliases = ['ancient'];
+const name = 'pumpitup';
+const description = 'Stops whatever you are playing and plays Pump it Up on repeat!';
+const aliases = ['pump'];
 const operatorOnly = false;
 
 module.exports = {
@@ -22,13 +22,13 @@ module.exports = {
 
 	async execute(interaction, command, args, client, user, audioPlayerManager) {
 
-        if (command == 'ancient') {
+        if (command == 'pump') {
 
-            if (args < 1) {
+            if (args < 2) {
                 return;
             }
 
-            if (args[0].toLowerCase() != 'stones') {
+            if (args[0].toLowerCase() != 'it' || args[1].toLowerCase() != 'up') {
                 return
             }
 
@@ -56,7 +56,7 @@ module.exports = {
         audioPlayer = audioPlayerManager.getPlayer(guildId);
 
 
-        url = "https://www.youtube.com/watch?v=mmZGrvAvPZM&ab_channel=Aramil";
+        url = "https://www.youtube.com/watch?v=BfnjX88Va4Y&ab_channel=DefectedRecords";
 
         if (audioPlayer.isPlaying) {
             audioPlayer.clearQueue();
