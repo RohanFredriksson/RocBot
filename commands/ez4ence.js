@@ -44,7 +44,7 @@ module.exports = {
         audioPlayer = audioPlayerManager.getPlayer(guildId);
 
 
-        url = "https://www.youtube.com/watch?v=kPkT0jMjEu8&ab_channel=theverkkars";
+        url = "https://www.youtube.com/watch?v=qemNTh_1yFo&ab_channel=TheVerkkars-Topic";
 
         if (audioPlayer.isPlaying) {
             audioPlayer.clearQueue();
