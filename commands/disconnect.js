@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const name = 'disconnect';
 const description = 'Disconnect the music bot.';
-const aliases = ['leave','dc','fuckoff'];
+const aliases = ['leave','dc','fuckoff','bye'];
 const operatorOnly = false;
 
 module.exports = {
