@@ -20,5 +20,11 @@ A Discord Music Bot that can stream music from YouTube to a discord server voice
 - **RemovePool**: Remove a playlist from the users playlists collection.
 - **AddSong**: Add a song to a user created playlist.
 - **RemoveSong**: Remove a song from a user created playlist.
+#### How to Use
+To host this music bot on your own server, follow these steps.
+1. Make a Discord Application in the Discord Developer Portal for the bot. https://discord.com/developers/applications
+2. Clone this repository. https://github.com/RohanFredriksson/RocBot.git
+3. 
+
 #### Reasoning
 Ever since music bots such as Rhythm and Groovy were taken down, my Discord server has lacked a nice way to listen to music with my friends. As a learning experience I decided to make my own music bot to fill this gap. I had worked with discord.js v11 prior to this project, but never had constructed anything useful so I saw this as a great opportunity to build something for an actual client. My friends provided great feedback for features that they wanted implemented and I would introduce these features. Through this experience I have become comfortable working with the discord.js v13 and audio streams, and have provided a product an excellent product to real users. As a bonus I can now can enjoy music with my friends once again.
