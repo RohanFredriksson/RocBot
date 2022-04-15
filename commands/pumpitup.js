@@ -22,18 +22,6 @@ module.exports = {
 
 	async execute(interaction, command, args, client, user, audioPlayerManager) {
 
-        if (command == 'pump') {
-
-            if (args < 2) {
-                return;
-            }
-
-            if (args[0].toLowerCase() != 'it' || args[1].toLowerCase() != 'up') {
-                return
-            }
-
-        }
-
         channel = interaction.getVoiceChannel();
 
         if (channel == null) {
