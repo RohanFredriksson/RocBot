@@ -4,13 +4,10 @@ const { AudioPlayerManager } = require('./classes/audioplayermanager.js');
 const { User } = require('./classes/user.js');
 const { Interaction } = require('./classes/interaction.js');
 
-const { token } = require('./config.json');
+const { token, prefix, operators } = require('./config.json');
 
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 client.commands = new Collection();
-
-const prefix = '$';
-const operators = ['202264121461309440'];
 
 // Set up commands.
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
