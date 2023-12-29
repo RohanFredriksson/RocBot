@@ -91,13 +91,7 @@ module.exports = {
 
             poolName = args.join(' ');
             interaction.send(`🎶 **|** Now playing from pool **${titleCase(poolName)}**`);
-
-            if (ordered) {
-                audioPlayer.setShuffle(false);
-            } else {
-                audioPlayer.setShuffle(true);
-            }
-
+            audioPlayer.setShuffle(ordered);
             audioPlayer.setPool(user.getPool(poolName));
             return;
 

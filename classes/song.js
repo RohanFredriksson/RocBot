@@ -23,39 +23,37 @@ module.exports = {
 
         static async getSong(searchTerms) {
 
-            if (ytdl.validateURL(searchTerms)) {
+            // If the list is empty return
+            if (searchTerms.length == 0) {return null;}
 
-                const songInfo = await ytdl.getInfo(searchTerms);
+            // See if we have been given a youtube link.
+            if (ytdl.validateURL(searchTerms[0])) {
+                const songInfo = await ytdl.getInfo(searchTerms[0]);
                 return new Song(songInfo.videoDetails.title, songInfo.videoDetails.video_url);
+            } 
 
-            } else {
-
-                const video = await Song.videoFinder(searchTerms.join(' '));
-                if (video) {
-                    return new Song(video.title, video.url);
-                } 
-                return null;
-
-            }
+            // Look up the search terms.
+            const video = await Song.videoFinder(searchTerms.join(' '));
+            if (video) {return new Song(video.title, video.url);} 
+            return null;
 
         }
 
         static async getUrl(searchTerms) {
             
-            if (ytdl.validateURL(searchTerms)) {
+            // If the list is empty return
+            if (searchTerms.length == 0) {return null;}
 
-                const songInfo = await ytdl.getInfo(searchTerms);
+            // See if we have been given a youtube link.
+            if (ytdl.validateURL(searchTerms[0])) {
+                const songInfo = await ytdl.getInfo(searchTerms[0]);
                 return songInfo.videoDetails.video_url;
+            } 
 
-            } else {
-
-                const video = await Song.videoFinder(searchTerms.join(' '));
-                if (video) {
-                    return video.url
-                } 
-                return null;
-
-            }
+            // Look up the search terms.
+            const video = await Song.videoFinder(searchTerms.join(' '));
+            if (video) {return video.url} 
+            return null;
 
         }
 

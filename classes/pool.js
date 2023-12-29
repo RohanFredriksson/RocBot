@@ -30,21 +30,10 @@ module.exports = {
         }
 
         getNext() {
-
-            if (this.isShuffled) {
-                return this.getRandomSong();
-            }
-
-            if (this.songs.length == 0) {
-                return null;
-            }
-
-            if (this.head >= this.songs.length) {
-                this.head = 0;
-            }
-
+            if (this.isShuffled) {return this.getRandomSong();}
+            if (this.songs.length == 0) {return null;}
+            if (this.head >= this.songs.length) {this.head = 0;}
             return this.songs[this.head++];
-
         }
 
         getSongList() {
@@ -69,73 +58,36 @@ module.exports = {
         }
 
         isEmpty() {
-            if (this.songs.length == 0) {
-                return true;
-            }
-            return false;
+            return this.songs.length == 0;
         }
 
         getRandomSong() {
-
-            if (this.songsShuffled.length == 0) {
-                return null;
-            }
-
-            if (this.shuffleHead >= this.songsShuffled.length) {
-                this.shuffleHead = 0;
-            }
-
+            if (this.songsShuffled.length == 0) {return null;}
+            if (this.shuffleHead >= this.songsShuffled.length) {this.shuffleHead = 0;}
             return this.songsShuffled[this.shuffleHead++];
-
         }
 
         async hasSong(searchTerms) {
-
             const url = await Song.getUrl(searchTerms);
-
-            for (let i = 0; i < this.songs.length; i++) {
-
-                if (this.songs[i].url == url) {
-                    return true;
-                }
-
-            }
-
+            for (let i = 0; i < this.songs.length; i++) {if (this.songs[i].url == url) {return true;}}
             return false;
-
         }
 
         async getSong(searchTerms) {
-
             const url = await Song.getUrl(searchTerms);
-
-            for (let i = 0; i < this.songs.length; i++) {
-
-                if (this.songs[i].url == url) {
-                    return this.songs[i];
-                }
-
-            }
-
+            for (let i = 0; i < this.songs.length; i++) {if (this.songs[i].url == url) {return this.songs[i];}}
             return null;
-
         }
 
         async addSong(searchTerms) {
-            
-            if (await this.hasSong(searchTerms)) {
-                return;
-            }
-
+            if (await this.hasSong(searchTerms)) {return;}
             this.songs.push(await Song.getSong(searchTerms));
             this.shuffle();
-
         }
 
         async removeSong(searchTerms) {
 
             const url = await Song.getUrl(searchTerms);
-
             for (let i = 0; i < this.songs.length; i++) {
 
                 if (this.songs[i].url == url) {

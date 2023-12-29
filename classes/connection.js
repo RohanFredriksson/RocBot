@@ -25,12 +25,9 @@ module.exports = {
         }
 
         disconnect() {
-
-            if (this.connection != null) {
-                this.connection.destroy();
-                this.connection = null;
-            }
-
+            if (this.connection == null) {return;}
+            this.connection.destroy();
+            this.connection = null;
         }
 
         subscribe(player) {
@@ -38,11 +35,8 @@ module.exports = {
         }
 
         unsubscribe() {
-            
-            if (this.subscription != null) {
-                this.subscription.unsubscribe();
-            }
-
+            if (this.subscription == null) {return;}
+            this.subscription.unsubscribe();
         }
 
     }

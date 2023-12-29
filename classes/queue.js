@@ -11,13 +11,8 @@ module.exports = {
         }
 
         getNext() {
-
-            if (this.songs.length == 0) {
-                return null;
-            }
-
+            if (this.songs.length == 0) {return null;}
             return this.songs.shift();
-
         }
 
         clear() {
@@ -25,10 +20,7 @@ module.exports = {
         }
 
         isEmpty() {
-            if (this.songs.length == 0) {
-                return true;
-            }
-            return false;
+            return this.songs.length == 0;
         }
 
         getSongList() {
@@ -49,19 +41,20 @@ module.exports = {
 
             const url = await Song.getUrl(searchTerms);
             for (let i = 0; i < this.songs.length; i++) {
-                
-                if (this.songs[i].url == url) {
-                    this.songs.splice(i, 1);
-                    return;
-                }
-
+                if (this.songs[i].url != url) {continue;}
+                this.songs.splice(i, 1);
+                return;
             }
 
         }
 
         async queuePlaylist(url) {
 
-            const playlist = await ytpl(url);
+            var playlist = null;
+            try {playlist = await ytpl(url);}
+            catch (err) {this.interaction.send(`🚫 **|** Playlist ${url} could not be found.`);}
+            if (playlist == null) {return;}
+            
             for (let i = 0; i < playlist.items.length; i++) {
                 let song = playlist.items[i];
                 this.songs.push(new Song(song.title, song.shortUrl));

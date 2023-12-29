@@ -6,11 +6,7 @@ module.exports = {
     User: class User {
 
         constructor(id, pools) {
-
-            if (pools === undefined) {
-                pools = [];
-            }
-
+            if (pools === undefined) {pools = [];}
             this.id = id;
             this.pools = pools;
         }
@@ -18,65 +14,29 @@ module.exports = {
         hasPool(pool) {
 
             if (typeof pool === "string") {
-
-                for (let i = 0; i < this.pools.length; i++) {
-
-                    if (this.pools[i].name.toLowerCase() == pool.toLowerCase()) {
-                        return true;
-                    }
-    
-                }
-    
+                for (let i = 0; i < this.pools.length; i++) {if (this.pools[i].name.toLowerCase() == pool.toLowerCase()) {return true;}}
                 return false;
-
             } 
             
             else if (pool instanceof Pool) {
-
-                for (let i = 0; i < this.pools.length; i++) {
-
-                    if (this.pools[i].name.toLowerCase() == pool.name.toLowerCase()) {
-                        return true;
-                    }
-    
-                }
-
+                for (let i = 0; i < this.pools.length; i++) {if (this.pools[i].name.toLowerCase() == pool.name.toLowerCase()) {return true;}}
                 return false;
-
             }
 
             return false;
-
+            
         }
 
         getPool(name) {
-
-            if (name == null) {
-                return null;
-            }
-            
-            for (let i = 0; i < this.pools.length; i++) {
-
-                if (this.pools[i].name.toLowerCase() == name.toLowerCase()) {
-                    return this.pools[i];
-                }
-
-            }
-
+            if (name == null) {return null;}
+            for (let i = 0; i < this.pools.length; i++) {if (this.pools[i].name.toLowerCase() == name.toLowerCase()) {return this.pools[i];}}
             return null;
-
         }
 
         getPoolNames() {
-
             const names = [];
-
-            for (let i = 0; i < this.pools.length; i++) {
-                names.push(this.pools[i].name);
-            }
-
+            for (let i = 0; i < this.pools.length; i++) {names.push(this.pools[i].name);}
             return names;
-
         }
 
         getPoolNameFromArgs(args) {
@@ -87,17 +47,9 @@ module.exports = {
             let currentName = '';
             
             for (let i = 0; i < n; i++) {
-                
-                if (i > 0) {
-                    currentName = currentName + ' ';
-                }
-
+                if (i > 0) {currentName = currentName + ' ';}
                 currentName = currentName + tmp.shift().toLowerCase();
-
-                if (names.includes(currentName)) {
-                    return currentName;
-                }
-
+                if (names.includes(currentName)) {return currentName;}
             }
 
             return null;
@@ -107,23 +59,13 @@ module.exports = {
         addPool(pool) {
 
             if (typeof pool === "string") {
-
-                if (this.hasPool(pool)) {
-                    return;
-                }
-    
+                if (this.hasPool(pool)) {return;}
                 this.pools.push(new Pool(pool));
-
             }
 
             else if (pool instanceof Pool) {
-
-                if (this.hasPool(pool.name)) {
-                    return;
-                }
-
+                if (this.hasPool(pool.name)) {return;}
                 this.pools.push(pool);
-
             }
 
         }
@@ -131,17 +73,15 @@ module.exports = {
         removePool(name) {
             
             for (let i = 0; i < this.pools.length; i++) {
-
-                if (this.pools[i].name == name) {
-                    this.pools.splice(i, 1);
-                    return;
-                }
-
+                if (this.pools[i].name != name) {continue;}
+                this.pools.splice(i, 1);
+                return;
             }
 
         }
 
         save() {
+            if (!fs.existsSync('./data/')) {fs.mkdirSync('./data/');}
             fs.writeFileSync('./data/' + this.id + '.json', this.stringify());
         }
 
@@ -151,23 +91,15 @@ module.exports = {
 
         static load(id) {
 
+            if (!fs.existsSync('./data/')) {fs.mkdirSync('./data/');}
             const userFiles = fs.readdirSync('./data').filter(file => file.endsWith('.json'));
+
             for (let file of userFiles) {
-                
-                if (file == id + '.json') {
-        
-                    try {
-                        return User.parse(fs.readFileSync('./data/' + file, 'utf8'));
-                    }
-                    
-                    catch (err) {
-                        console.log(err);
-                        continue;
-                    }
-        
-                }
-                
+                if (file != id + '.json') {continue;}
+                try {return User.parse(fs.readFileSync('./data/' + file, 'utf8'));}
+                catch (err) {console.log(err); continue;}
             }
+
             const newUser = new User(id);
             newUser.save();
             return newUser;
@@ -177,13 +109,11 @@ module.exports = {
         static parse(str) {
 
             const json = JSON.parse(str);
-
             const newPools = [];
-            for (let i = 0; i < json.pools.length; i++) {
-                newPools.push(Pool.parse(JSON.stringify(json.pools[i])));
-            }
+            for (let i = 0; i < json.pools.length; i++) {newPools.push(Pool.parse(JSON.stringify(json.pools[i])));}
 
             return new User(json.id, newPools);
+
         }
 
     }

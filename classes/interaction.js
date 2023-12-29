@@ -11,25 +11,15 @@ module.exports = {
 
             const json = interaction.toJSON()
 
-            if (json['type'] == 'APPLICATION_COMMAND') {
-                this.isInteraction = true;
-            }
-
-            else {
-                this.isInteraction = false;
-            }
+            if (json['type'] == 'APPLICATION_COMMAND') {this.isInteraction = true;}
+            else {this.isInteraction = false;}
 
         }
 
         defer() {
-            
-            if (!this.isInteraction) {
-                return;
-            }
-
+            if (!this.isInteraction) {return;}
             this.deferred = true;
             this.interaction.deferReply();
-
         }
 
         send(output) {
@@ -72,23 +62,13 @@ module.exports = {
         }
 
         getUserId() {
-
-            if (!this.isInteraction) {
-                return this.interaction.author.id;
-            }
-
-            return interaction.user.id;;
-
+            if (!this.isInteraction) {return this.interaction.author.id;}
+            return interaction.user.id;
         }
 
         getGuildId() {
-
-            if (!this.isInteraction) {
-                return this.interaction.member.guild.id;
-            }
-            
+            if (!this.isInteraction) {return this.interaction.member.guild.id;}
             return this.interaction.guildId;
-    
         }
 
         getGuild() {
@@ -104,13 +84,8 @@ module.exports = {
         }
 
         getUsername() {
-
-            if (!this.isInteraction) {
-                return this.interaction.author.username;
-            }
-    
+            if (!this.isInteraction) {return this.interaction.author.username;}
             return this.interaction.user.username;
-
         }
 
     }

@@ -23,32 +23,18 @@ module.exports = {
 
         getNext() {
 
-            if (this.repeat) {
-                return this.currentSong;
-            }
+            if (this.repeat) {return this.currentSong;}
 
             let song = null;
 
             if (this.queue != null) {
-                
                 song = this.queue.getNext();
-
-                if (song != null) {
-                    this.currentSong = song;
-                    return song;
-                }
-
+                if (song != null) {this.currentSong = song; return song;}
             }
 
             if (this.pool != null) {
-
                 song = this.pool.getNext();
-
-                if (song != null) {
-                    this.currentSong = song;
-                    return song;
-                }
-
+                if (song != null) {this.currentSong = song; return song;}
             }
 
             this.currentSong = null;
@@ -57,61 +43,32 @@ module.exports = {
         }
 
         toggleRepeat() {
-
             this.repeat = !this.repeat;
-
-            if (this.repeat) {
-                this.interaction.send(`🔁 **|** **Repeat: On**`);
-            }
-
-            else {
-                this.interaction.send(`🔁 **|** **Repeat: Off**`);
-            }
-
+            if (this.repeat) {this.interaction.send(`🔁 **|** **Repeat: On**`);}
+            else {this.interaction.send(`🔁 **|** **Repeat: Off**`);}
         }
 
         setRepeat(repeat) {
-
             this.repeat = repeat;
-
-            if (this.repeat) {
-                this.interaction.send(`🔁 **|** **Repeat: On**`);
-            }
-
-            else {
-                this.interaction.send(`🔁 **|** **Repeat: Off**`);
-            }
-
+            if (this.repeat) {this.interaction.send(`🔁 **|** **Repeat: On**`);}
+            else {this.interaction.send(`🔁 **|** **Repeat: Off**`);}
         }
 
         toggleShuffle() {
 
-            if (this.pool == null) {
-                this.interaction.send(`🚫 **|** You must be playing from a pool to toggle the shuffle!`);
-                return;
-            }
+            if (this.pool == null) {this.interaction.send(`🚫 **|** You must be playing from a pool to toggle the shuffle!`); return;}
 
             this.shuffle = !this.shuffle;
 
             if (this.shuffle) {
-
                 this.interaction.send(`🔀 **|** **Shuffle: On**`);
-
-                if (this.pool != null) {
-                    this.pool.setShuffle(true);
-                }
-                
+                if (this.pool != null) {this.pool.setShuffle(true);}
                 return;
             }
 
             else {
-
                 this.interaction.send(`🔀 **|** **Shuffle: Off**`);
-
-                if (this.pool != null) {
-                    this.pool.setShuffle(false);
-                }
-
+                if (this.pool != null) {this.pool.setShuffle(false);}
                 return;
             }
 
@@ -128,21 +85,10 @@ module.exports = {
         }
 
         setShuffle(shuffle) {
-
             this.shuffle = shuffle;
-
-            if (this.shuffle) {
-                this.interaction.send(`🔀 **|** **Shuffle: On**`);
-            }
-
-            else {
-                this.interaction.send(`🔀 **|** **Shuffle: Off**`);
-            }
-
-            if (this.pool != null) {
-                this.pool.setShuffle(shuffle);
-            }
-
+            if (this.shuffle) {this.interaction.send(`🔀 **|** **Shuffle: On**`);}
+            else {this.interaction.send(`🔀 **|** **Shuffle: Off**`);}
+            if (this.pool != null) {this.pool.setShuffle(shuffle);}
         }
 
         async addSong(searchTerms) {

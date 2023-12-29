@@ -112,13 +112,8 @@ module.exports = {
 
         setChannel(channel) {
 
-            if (channel == null) {
-                throw new Error('Channel can not be null.');
-            }
-
-            if (this.channel.id == channel.id) {
-                return;
-            }
+            if (channel == null) {throw new Error('Channel can not be null.');}
+            if (this.channel.id == channel.id) {return;}
 
             this.connection.unsubscribe();
             this.connection.disconnect();
