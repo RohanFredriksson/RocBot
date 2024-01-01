@@ -10,8 +10,7 @@ module.exports = {
             this.firstReplySent = false;
 
             const json = interaction.toJSON()
-
-            if (json['type'] == 'APPLICATION_COMMAND') {this.isInteraction = true;}
+            if (json['type'] == 2) {this.isInteraction = true;}
             else {this.isInteraction = false;}
 
         }

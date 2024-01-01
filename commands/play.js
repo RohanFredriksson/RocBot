@@ -34,8 +34,10 @@ module.exports = {
                 .addStringOption(option =>
                     option.setName("order")
                     .setDescription("Choose whether the songs should be played in chronological order or randomly picked.")
-                    .addChoice("shuffled", "shuffled")
-                    .addChoice("ordered", "ordered")
+                    .addChoices(
+                        {name: "shuffled", value: "shuffled"},  
+                        {name: "ordered", value: "ordered"},  
+                    )
                 ),
                 new SlashCommandBuilder()
 			    .setName('playlist')
