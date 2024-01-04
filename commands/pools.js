@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { titleCase } = require('./../util.js');
 
 const name = 'pools';
@@ -22,7 +22,7 @@ module.exports = {
 
     async execute(interaction, command, args, client, user, audioPlayerManager) {
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor('FFA500')
             .setTitle(`${interaction.getUsername()}'s Song Pools`);
 

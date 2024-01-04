@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { titleCase } = require('./../util.js');
 
 const name = 'pool';
@@ -39,7 +39,7 @@ module.exports = {
             return;
         }
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor('FFA500')
             .setTitle(`${titleCase(pool.name)}`);
 

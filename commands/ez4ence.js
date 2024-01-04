@@ -48,14 +48,14 @@ module.exports = {
 
         if (audioPlayer.isPlaying) {
             audioPlayer.clearQueue();
-            await audioPlayer.addSong(url);
+            await audioPlayer.addSong([url]);
             audioPlayer.setRepeat(false);
             audioPlayer.skip();
             audioPlayer.setRepeat(true);
         }
 
         else {
-            await audioPlayer.addSong(url);
+            await audioPlayer.addSong([url]);
             audioPlayer.setRepeat(true);
         }
 
