@@ -47,20 +47,13 @@ module.exports = {
 
         if (songs.length == 0) {
             embed.setDescription('Hmm, this seems to be empty.');
+            interaction.send({embeds: [embed]});
+            return;
         }
 
-        else {
-
-            list = '';
-            for (i = 0; i < songs.length; i++) {
-                song = songs[i];
-                list = list + `**${i+1}.** [${song.title}](${song.url})\n`;
-            }
-
-            embed.setDescription(list);
-
-        }
-
+        list = '';
+        for (i = 0; i < songs.length; i++) {list = list + `**${i+1}.** [${songs[i].title}](${songs[i].url})\n`;}
+        embed.setDescription(list);
         interaction.send({embeds: [embed]});
 
 	}

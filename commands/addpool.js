@@ -54,21 +54,17 @@ module.exports = {
         }
 
         // User wishes to create a new pool.
-        else {
+        pool = args.join(' ');
 
-            pool = args.join(' ');
-
-            if (user.hasPool(pool)) {
-                interaction.send('🚫 **|** Song pool already exists! Song pools can not have the same name');
-                return;
-            }
-
-            user.addPool(pool);
-            user.save();
-
-            interaction.send(`✅ **|** Pool **${titleCase(pool)}** created!`);
-
+        if (user.hasPool(pool)) {
+            interaction.send('🚫 **|** Song pool already exists! Song pools can not have the same name');
+            return;
         }
+
+        user.addPool(pool);
+        user.save();
+
+        interaction.send(`✅ **|** Pool **${titleCase(pool)}** created!`);
 
 	}
 

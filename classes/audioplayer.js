@@ -125,6 +125,10 @@ module.exports = {
 
         }
 
+        getChannel() {
+            return this.channel;
+        }
+
         setInteraction(interaction) {
             this.interaction = interaction;
             this.songHandler.setInteraction(interaction);

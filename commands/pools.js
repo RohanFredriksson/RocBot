@@ -30,20 +30,13 @@ module.exports = {
 
         if (pools.length == 0) {
             embed.setDescription('Hmm, you have no song pools.');
+            interaction.send({embeds: [embed]});
+            return;
         }
 
-        else {
-
-            list = '';
-            for (i = 0; i < pools.length; i++) {
-                pool = pools[i];
-                list = list + ` - **${titleCase(pool.name)}** *(${pool.songs.length} songs)*\n`;
-            }
-
-            embed.setDescription(list);
-
-        }
-
+        list = '';
+        for (i = 0; i < pools.length; i++) {list = list + `- **${titleCase(pools[i].name)}** *(${pools[i].songs.length} songs)*\n`;}
+        embed.setDescription(list);
         interaction.send({embeds: [embed]});
 
 	}

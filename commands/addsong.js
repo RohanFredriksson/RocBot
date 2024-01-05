@@ -58,16 +58,13 @@ module.exports = {
         }
 
         if (await pool.hasSong(args)) {
-
             song = await pool.getSong(args)
             title = song.title;
-
             interaction.send(`🚫 **|** Song "${title}" is already in pool "${titleCase(poolName)}`);
             return;
         }
 
         await pool.addSong(args);
-
         song = await pool.getSong(args)
         
         if (song == null) {

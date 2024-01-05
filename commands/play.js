@@ -56,47 +56,28 @@ module.exports = {
             return;
         }
 
+        guildId = interaction.getGuildId();
         channel = interaction.getVoiceChannel();
 
-        if (channel == null) {
-            interaction.send('🚫 **|** To use this command, I must be in a voice channel!');
-            return;
-        }   
-
-        guildId = interaction.getGuildId();
-
-        // Create a new audio player if one doesn't exist.
-        if (!audioPlayerManager.hasPlayer(guildId)) {
-            audioPlayerManager.createPlayer(guildId, channel, interaction);
-        } 
-        
-        // Update the channel and interaction objects in the audio player if it exists.
-        else {
-            audioPlayerManager.updatePlayer(guildId, channel, interaction);
-        }
-
+        if (channel == null) {interaction.send('🚫 **|** To use this command, you must be in a voice channel!'); return;}
+        if (!audioPlayerManager.hasPlayer(interaction.getGuildId())) {audioPlayerManager.createPlayer(guildId, channel, interaction);}
+        audioPlayerManager.updatePlayer(guildId, channel, interaction);
         audioPlayer = audioPlayerManager.getPlayer(guildId);
 
         orderedAliases = ['ordered', 'order'];
         shuffleAliases = ['shuffled', 'random', 'shuffle'];
 
         ordered = false;
-        if (orderedAliases.includes(args[args.length-1])) {
-            args.pop();
-            ordered = true;
-        } else if (shuffleAliases.includes(args[args.length-1])) {
-            args.pop();
-        }
+        if (orderedAliases.includes(args[args.length-1])) {args.pop(); ordered = true;} 
+        else if (shuffleAliases.includes(args[args.length-1])) {args.pop();}
 
         // Check if the user entered a pool name, set the pool.
         if (user.hasPool(args.join(' ')) && command != 'playsong') {
-
             poolName = args.join(' ');
             interaction.send(`🎶 **|** Now playing from pool **${titleCase(poolName)}**`);
             audioPlayer.setShuffle(ordered);
             audioPlayer.setPool(user.getPool(poolName));
             return;
-
         }
 
         if (command == 'playpool') {

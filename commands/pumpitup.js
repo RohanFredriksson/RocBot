@@ -22,27 +22,13 @@ module.exports = {
 
 	async execute(interaction, command, args, client, user, audioPlayerManager) {
 
+        guildId = interaction.getGuildId();
         channel = interaction.getVoiceChannel();
 
-        if (channel == null) {
-            interaction.send('🚫 **|** To use this command, I must be in a voice channel!');
-            return;
-        }   
-
-        guildId = interaction.getGuildId();
-
-        // Create a new audio player if one doesn't exist.
-        if (!audioPlayerManager.hasPlayer(guildId)) {
-            audioPlayerManager.createPlayer(guildId, channel, interaction);
-        } 
-        
-        // Update the channel and interaction objects in the audio player if it exists.
-        else {
-            audioPlayerManager.updatePlayer(guildId, channel, interaction);
-        }
-
+        if (channel == null) {interaction.send('🚫 **|** To use this command, you must be in a voice channel!'); return;}
+        if (!audioPlayerManager.hasPlayer(interaction.getGuildId())) {audioPlayerManager.createPlayer(guildId, channel, interaction);}
+        audioPlayerManager.updatePlayer(guildId, channel, interaction);
         audioPlayer = audioPlayerManager.getPlayer(guildId);
-
 
         url = "https://www.youtube.com/watch?v=BfnjX88Va4Y&ab_channel=DefectedRecords";
 

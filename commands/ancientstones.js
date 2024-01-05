@@ -22,39 +22,16 @@ module.exports = {
 
 	async execute(interaction, command, args, client, user, audioPlayerManager) {
 
-        if (command == 'ancient') {
-
-            if (args < 1) {
-                return;
-            }
-
-            if (args[0].toLowerCase() != 'stones') {
-                return
-            }
-
-        }
-
-        channel = interaction.getVoiceChannel();
-
-        if (channel == null) {
-            interaction.send('🚫 **|** To use this command, I must be in a voice channel!');
-            return;
-        }   
+        if (command == 'ancient' && args < 1) {return;}
+        if (command == 'ancient' && args[0].toLowerCase() != 'stones') {return;}
 
         guildId = interaction.getGuildId();
+        channel = interaction.getVoiceChannel();
 
-        // Create a new audio player if one doesn't exist.
-        if (!audioPlayerManager.hasPlayer(guildId)) {
-            audioPlayerManager.createPlayer(guildId, channel, interaction);
-        } 
-        
-        // Update the channel and interaction objects in the audio player if it exists.
-        else {
-            audioPlayerManager.updatePlayer(guildId, channel, interaction);
-        }
-
+        if (channel == null) {interaction.send('🚫 **|** To use this command, you must be in a voice channel!'); return;}
+        if (!audioPlayerManager.hasPlayer(interaction.getGuildId())) {audioPlayerManager.createPlayer(guildId, channel, interaction);}
+        audioPlayerManager.updatePlayer(guildId, channel, interaction);
         audioPlayer = audioPlayerManager.getPlayer(guildId);
-
 
         url = "https://www.youtube.com/watch?v=mmZGrvAvPZM&ab_channel=Aramil";
 

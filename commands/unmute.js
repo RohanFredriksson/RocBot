@@ -20,27 +20,14 @@ module.exports = {
 
 	async execute(interaction, command, args, client, user, audioPlayerManager) {
 
+        guildId = interaction.getGuildId();
         channel = interaction.getVoiceChannel();
 
-        if (channel == null) {
-            interaction.send('🚫 **|** To use this command, I must be in a voice channel!');
-            return;
-        }   
-
-        guildId = interaction.getGuildId();
-
-        // See if an audio player has been created for the channel.
-        if (!audioPlayerManager.hasPlayer(guildId)) {
-            interaction.send('🚫 **|** To use this command, I must be in a voice channel!');
-            return;
-        } 
-        
-        // Update the channel and interaction objects in the audio player if it exists.
-        else {
-            audioPlayerManager.updatePlayer(guildId, channel, interaction);
-        }
-
+        if (channel == null) {interaction.send('🚫 **|** To use this command, you must be in a voice channel!'); return;}
+        if (!audioPlayerManager.hasPlayer(interaction.getGuildId())) {audioPlayerManager.createPlayer(guildId, channel, interaction);}
+        audioPlayerManager.updatePlayer(guildId, channel, interaction);
         audioPlayer = audioPlayerManager.getPlayer(guildId);
+
         audioPlayer.unmute();
 
 	}
